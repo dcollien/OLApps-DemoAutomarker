@@ -1,27 +1,27 @@
 include "mustache.js"
 template = include "adminTemplate.html"
 
-adminOnly = (callback) ->
+# Logic Filters
+adminOnly = (passThrough) ->
 	if OpenLearning.isAdmin request.user
-		callback()
+		passThrough()
 	else
 		response.setStatusCode 403
 		response.writeText 'Error: Not Allowed'
 
-post = ->
-	data = { 'match': request.data['match'] }
-	OpenLearning.setPageData data
-	return data
-
-get = -> { 'match': OpenLearning.getPageData( )['match'] }
-
+post = (passThrough) -> passThrough() if request.method is 'POST'
+get  = (passThrough) -> passThrough() if request.method is 'GET'
 
 adminOnly ->
-	view = if request.method is 'POST' then post() else get()
+	view = 
+		app_init_js: request.appInitScript
+		csrf_token:  request.csrfFormInput
 
-	view['app_init_js'] = request.appInitScript
-	view['csrf_token']  = request.csrfFormInput
+	post ->
+		view = { 'match': request.data['match'] }
+		OpenLearning.setPageData view
+
+	get ->
+		view = { 'match': OpenLearning.getPageData( )['match'] }
 	
 	response.writeData Mustache.render( template, view )
-
-
