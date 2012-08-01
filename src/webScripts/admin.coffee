@@ -21,10 +21,10 @@ adminOnly ->
 		csrf_token:  request.csrfFormInput
 
 	post ->
-		view = { 'match': request.data['match'] }
+		view['match'] = request.data['match']
 		OpenLearning.page.setData view, request.user
 
 	get ->
-		view = { 'match': OpenLearning.page.getData( request.user )['match'] }
+		view['match'] = OpenLearning.page.getData( request.user )['match']
 	
 	response.writeData Mustache.render( template, view )
