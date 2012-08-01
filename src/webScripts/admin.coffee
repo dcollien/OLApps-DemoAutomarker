@@ -1,9 +1,8 @@
 include "mustache.js"
-template = include "adminTemplate.html"
 
-# Logic Filters
+# Guards
 adminOnly = (passThrough) ->
-	if OpenLearning.isAdmin request.user
+	if request.isAdmin
 		passThrough()
 	else
 		response.setStatusCode 403
@@ -12,6 +11,10 @@ adminOnly = (passThrough) ->
 post = (passThrough) -> passThrough() if request.method is 'POST'
 get  = (passThrough) -> passThrough() if request.method is 'GET'
 
+
+# View Creation
+template = include "adminTemplate.html"
+
 adminOnly ->
 	view = 
 		app_init_js: request.appInitScript
@@ -19,9 +22,9 @@ adminOnly ->
 
 	post ->
 		view = { 'match': request.data['match'] }
-		OpenLearning.setPageData view
+		OpenLearning.page.setData view, request.user
 
 	get ->
-		view = { 'match': OpenLearning.getPageData( )['match'] }
+		view = { 'match': OpenLearning.page.getData( request.user )['match'] }
 	
 	response.writeData Mustache.render( template, view )
