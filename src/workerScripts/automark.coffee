@@ -10,15 +10,15 @@ compiledCode = CRunner.compileFiles files
 
 programStdout = ''
 environment =
-	stdin: -> activityData.stdin
-	stdout: (output) -> programStdout += output
+	stdin: -> (activityData.stdin.replace '\r', '')
+	stdout: (output) -> programStdout += output + '\n'
 
 args = ['run', activityData.args] # TODO: arg parsing
 
 CRunner.runProgram compiledCode, environment, args
 
 marks = {}
-if programStdout is activityData.stdout
+if programStdout is (activityData.stdout.replace '\r', '')
 	marks[data.user] = { completed: true }
 else
 	marks[data.user] = { completed: false }
