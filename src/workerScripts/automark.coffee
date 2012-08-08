@@ -23,4 +23,4 @@ if programStdout is activityData.stdout
 else
 	marks[data.user] = { completed: false }
 
-OpenLearning.activities.setMarks marks
+OpenLearning.activity.setMarks marks
