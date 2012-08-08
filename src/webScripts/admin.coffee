@@ -1,30 +1,28 @@
 include "mustache.js"
-
-# Guards
-adminOnly = (passThrough) ->
-	if request.isAdmin
-		passThrough()
-	else
-		response.setStatusCode 403
-		response.writeText 'Error: Not Allowed'
-
-post = (passThrough) -> passThrough() if request.method is 'POST'
-get  = (passThrough) -> passThrough() if request.method is 'GET'
-
+include "guards.js"
 
 # View Creation
 template = include "adminTemplate.html"
+deniedTemplate = include "accessDeniedTemplate.html"
 
-adminOnly ->
-	view = 
-		app_init_js: request.appInitScript
-		csrf_token:  request.csrfFormInput
+adminOnly deniedTemplate, ->
+	view = {}
 
 	post ->
-		view['match'] = request.data['match']
+		view['stdin']  = request.data['stdin']
+		view['stdout'] = request.data['stdout']
+		view['args']   = request.data['args']
+
 		OpenLearning.page.setData view, request.user
 
 	get ->
-		view['match'] = OpenLearning.page.getData( request.user )['match']
-	
-	response.writeData Mustache.render( template, view )
+		data = OpenLearning.page.getData( request.user )
+
+		view['stdin']  = data['stdin']
+		view['stdout'] = data['stdout']
+		view['args']   = data['args']
+
+	view['app_init_js'] = request.appInitScript
+	view['csrf_token']  = request.csrfFormInput
+
+	return [template, view]

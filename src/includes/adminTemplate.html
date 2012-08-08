@@ -12,17 +12,31 @@
 				<fieldset>
 					{{&csrf_token}}
 					
-					<legend>Testing</legend>
+					<legend>Specification</legend>
+
 					<div class="control-group">
-						<label class="control-label" for="title">Page text must match:</label>
+						<label class="control-label" for="args">Commandline Arguments</label>
 						<div class="controls">
-							<textarea type="text" name="match" id="match" style="width: 320px; height: 120px;">{{match}}</textarea>
+							<input type="text" class="input-xlarge" name="args" id="args" value="{{args}}">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="stdin">Stdin</label>
+						<div class="controls">
+							<textarea name="stdin" id="stdin" style="width: 320px; height: 120px;">{{stdin}}</textarea>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="stdout">Stdout</label>
+						<div class="controls">
+							<textarea name="stdout" id="stdout" style="width: 320px; height: 120px;">{{stdout}}</textarea>
 						</div>
 					</div>
 
 					<div class="form-actions">
 						<button type="submit" class="btn btn-primary">Save changes</button>
-						<button type="button" class="btn">Cancel</button>
 					</div>
 				</fieldset>
 			</form>
