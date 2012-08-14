@@ -3,7 +3,14 @@ include "cRunner.js"
 activityData = OpenLearning.page.getData( )
 
 files = {}
-for file in data.submission
+
+if (data.submission instanceof Array)
+	# multiple files
+	for file in data.submission
+		files[file.filename] = file.data
+else
+	# single file
+	file = data.submission
 	files[file.filename] = file.data
 
 compiledCode = CRunner.compileFiles files
