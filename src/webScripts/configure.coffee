@@ -8,21 +8,32 @@ deniedTemplate = include "accessDeniedTemplate.html"
 adminOnly deniedTemplate, ->
 	view = {}
 
-	post ->
-		view['stdin']  = request.data['stdin']
-		view['stdout'] = request.data['stdout']
-		view['args']   = request.data['args']
+	if request.method is 'POST'
+		# grab data from post data
+		view.stdin  = request.data.stdin
+		view.stdout = request.data.stdout
+		view.args   = request.data.args
 
-		OpenLearning.page.setData view, request.user
+		# set activity page data
+		try
+			OpenLearning.page.setData view, request.user
+		catch err
+			view.error = 'Unable to connect to OpenLearning'
 
-	get ->
-		data = OpenLearning.page.getData( request.user )
+	else
+		# get activity page data
+		try
+			data = OpenLearning.page.getData( request.user )
+		catch err
+			view.error = 'Unable to connect to OpenLearning'
 
-		view['stdin']  = data['stdin']
-		view['stdout'] = data['stdout']
-		view['args']   = data['args']
+		# build view from page data
+		view.stdin  = data.stdin
+		view.stdout = data.stdout
+		view.args   = data.args
 
-	view['app_init_js'] = request.appInitScript
-	view['csrf_token']  = request.csrfFormInput
+	# add on extra template data
+	view.app_init_js = request.appInitScript
+	view.csrf_token  = request.csrfFormInput
 
 	return [template, view]
