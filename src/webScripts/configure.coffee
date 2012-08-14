@@ -27,10 +27,11 @@ adminOnly deniedTemplate, ->
 		catch err
 			view.error = 'Unable to connect to OpenLearning'
 
-		# build view from page data
-		view.stdin  = data.stdin
-		view.stdout = data.stdout
-		view.args   = data.args
+		if not view.error?
+			# build view from page data
+			view.stdin  = data.stdin
+			view.stdout = data.stdout
+			view.args   = data.args
 
 	# add on extra template data
 	view.app_init_js = request.appInitScript
