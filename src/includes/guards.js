@@ -1,6 +1,6 @@
 var adminOnly = function( deniedTemplate, controller ) {
 	var data, template, view;
-	if ( request.sessionData.permissions.indexOf['edit'] != -1 ) {
+	if ( request.sessionData.permissions.indexOf('edit') != -1 ) {
 		data = controller( );
 		template = data[0];
 		view = data[1];
