@@ -9,7 +9,7 @@ adminOnly deniedTemplate, ->
 	view = {}
 
 	if request.method is 'POST'
-		# grab data from post data
+		# grab data from POST
 		view.stdin  = request.data.stdin
 		view.stdout = request.data.stdout
 		view.args   = request.data.args
@@ -20,6 +20,9 @@ adminOnly deniedTemplate, ->
 		catch err
 			view.error = 'Something went wrong: Unable to save data'
 
+		if not view.args? or view.args is ''
+			view.args = 'run'
+		
 	else
 		# get activity page data
 		try

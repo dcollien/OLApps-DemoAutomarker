@@ -20,7 +20,9 @@ environment =
 	stdin: -> (activityData.stdin.replace '\r', '')
 	stdout: (output) -> programStdout += output + '\n'
 
-args = ['run', activityData.args] # TODO: arg parsing
+args = (arg.replace(/^\"|\"$/g, '') for arg in activityData.args.match(/\w+|"[^"]+"/g))
+
+log args
 
 CRunner.runProgram compiledCode, environment, args
 
