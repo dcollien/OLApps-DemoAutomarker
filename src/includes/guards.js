@@ -1,6 +1,6 @@
 var adminOnly = function( deniedTemplate, controller ) {
 	var data, template, view;
-	if ( request.sessionData.isAdmin ) {
+	if ( request.sessionData.permissions.indexOf['edit'] != -1 ) {
 		data = controller( );
 		template = data[0];
 		view = data[1];
@@ -22,16 +22,4 @@ var render = function( controller ) {
 	view = data[1];
 
 	response.writeData( Mustache.render( template, view ) );
-};
-
-var post = function( passThrough ) {
-	if ( request.method === 'POST' ) {
-		passThrough( );
-	}
-};
-
-var get = function( passThrough ) {
-	if ( request.method === 'GET' ) {
-		passThrough( );
-	}
 };
