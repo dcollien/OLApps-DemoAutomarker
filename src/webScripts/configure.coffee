@@ -18,15 +18,15 @@ adminOnly deniedTemplate, ->
 		try
 			OpenLearning.page.setData view, request.user
 		catch err
-			view.error = 'Unable to connect to OpenLearning'
+			view.error = 'Something went wrong: Unable to save data'
 
 	else
 		# get activity page data
 		try
 			data = OpenLearning.page.getData( request.user )
 		catch err
-			view.error = 'Unable to connect to OpenLearning'
-
+			view.error = 'Something went wrong: Unable to load data'
+		
 		if not view.error?
 			# build view from page data
 			view.stdin  = data.stdin
