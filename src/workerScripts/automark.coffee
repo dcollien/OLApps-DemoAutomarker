@@ -22,7 +22,10 @@ compiledCode = CRunner.compileFiles files
 
 if compiledCode.error
 	# there was a compile error
-	markObject = { completed: false, comments: compiledCode.response }
+	comments = '{{{\n'
+	comments += compiledCode.response
+	comments += '}}}\n'
+	markObject = { completed: false, comments: comments }
 else
 	# collect stdout and provide stdin
 	programStdout = ''
@@ -41,11 +44,14 @@ else
 
 	if (programStdout is expectedOut)
 		# matches, woohoo!
-		markObject = { completed: true, comments: 'You are Awesome!' }
+		markObject = { completed: true, comments: '**You are Awesome!**' }
 	else
 		# better luck next time
-		comments = 'Expected: ' + JSON.stringify( expectedOut ) + ' \n'
-		comments += 'Program output: ' + JSON.stringify( programStdout ) + ' \n' 
+		comments = '{{{\n'
+		comments += 'Expected: ' + JSON.stringify( expectedOut ) + '\n'
+		comments += 'Program output: ' + JSON.stringify( programStdout ) + '\n' 
+		comments += '}}}\n'
+
 		markObject = { completed: false, comments: comments }
 
 # bundle this mark into a marks update object
