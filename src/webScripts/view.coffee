@@ -29,6 +29,7 @@ get = ->
 	# get activity page data
 	try
 		view.fileData = (OpenLearning.activity.getSubmission request.user).data
+		view.error = JSON.stringify(OpenLearning.activity.getSubmission request.user)
 	catch err
 		view.error = 'Something went wrong: Unable to load data: ' + err
 
