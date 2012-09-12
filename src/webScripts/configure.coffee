@@ -1,43 +1,50 @@
 include "mustache.js"
 include "guards.js"
 
-# View Creation
 template = include "adminTemplate.html"
-deniedTemplate = include "accessDeniedTemplate.html"
+accessDeniedTemplate = include "accessDeniedTemplate.html"
 
-adminOnly deniedTemplate, ->
+fields = ['stdin', 'stdout', 'args', 'isEmbedded']
+
+# POST and GET controllers
+post = ->
+	# grab data from POST
 	view = {}
 
+	for field in fields
+		view[field] = request.data[field]
+
+	# set activity page data
+	try
+		OpenLearning.page.setData view, request.user
+	catch err
+		view.error = 'Something went wrong: Unable to save data'
+
+	if not view.args? or view.args is ''
+		view.args = 'run'
+	
+	return view
+
+get = ->
+	view = {}
+
+	# get activity page data
+	try
+		data = OpenLearning.page.getData( request.user )
+	catch err
+		view.error = 'Something went wrong: Unable to load data'
+	
+	if not view.error?
+		# build view from page data
+		for field in fields
+			view[field] = data[field]
+
+	return view
+
+
+checkPermission 'write', accessDeniedTemplate, ->
 	if request.method is 'POST'
-		# grab data from POST
-		view.stdin  = request.data.stdin
-		view.stdout = request.data.stdout
-		view.args   = request.data.args
-
-		# set activity page data
-		try
-			OpenLearning.page.setData view, request.user
-		catch err
-			view.error = 'Something went wrong: Unable to save data'
-
-		if not view.args? or view.args is ''
-			view.args = 'run'
-		
+		render template, post()
 	else
-		# get activity page data
-		try
-			data = OpenLearning.page.getData( request.user )
-		catch err
-			view.error = 'Something went wrong: Unable to load data'
-		
-		if not view.error?
-			# build view from page data
-			view.stdin  = data.stdin
-			view.stdout = data.stdout
-			view.args   = data.args
+		render template, get()
 
-	# add on extra template data
-	view.app_init_js = request.appInitScript
-	view.csrf_token  = request.csrfFormInput
-
-	return [template, view]
