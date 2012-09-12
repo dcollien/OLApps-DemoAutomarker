@@ -30,8 +30,8 @@ get = ->
 	try
 		view.fileData = (OpenLearning.page.getSubmission request.user).data
 	catch err
-		view.error = 'Something went wrong: Unable to load data'
-	
+		view.error = 'Something went wrong: Unable to load data: ' + err
+
 	return view
 
 
