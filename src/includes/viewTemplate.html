@@ -7,8 +7,9 @@
 		{{&app_init_js}}
 	</head>
 	<body>
-		
-		{{#error}}<br/> <br/><span class="alert">{{error}}</span><br/> <br/>{{/error}}
+		{{#error}}<br/> <br/><div class="alert">{{error}}</div><br/> <br/>{{/error}}
+
+		{{#message}}<br/> <br/><div class="alert alert-success">{{message}}</div><br/> <br/>{{/message}}
 
 		<div class="container" style="width: 740px">
 			<form method="post" class="form-horizontal">
