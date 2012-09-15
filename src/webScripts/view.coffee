@@ -20,7 +20,7 @@ post = ->
 		OpenLearning.activity.saveSubmission request.user, file, 'file'
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
-	
+
 	return view
 
 get = ->
@@ -36,7 +36,7 @@ get = ->
 	return view
 
 
-checkPermission 'write', accessDeniedTemplate, ->
+checkPermission 'read', accessDeniedTemplate, ->
 	if request.method is 'POST'
 		render template, post()
 	else
