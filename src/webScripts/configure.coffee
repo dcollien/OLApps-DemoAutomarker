@@ -28,11 +28,10 @@ post = ->
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
-
-
 	if not view.args? or view.args is ''
 		view.args = 'run'
-	
+
+	view.message = 'Saved'
 	return view
 
 get = ->
@@ -48,6 +47,9 @@ get = ->
 		# build view from page data
 		for field in fields
 			view[field] = data[field]
+
+	if data.isEmbedded
+		view.isEmbedded = true
 
 	return view
 

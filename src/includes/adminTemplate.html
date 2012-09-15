@@ -10,6 +10,8 @@
 		
 		{{#error}}<br/> <br/><span class="alert">{{error}}</span><br/> <br/>{{/error}}
 
+		{{#message}}<br/> <br/><span class="alert success">{{message}}</span><br/> <br/>{{/message}}
+
 		<div class="container">
 			<form method="post" class="form-horizontal">
 				<fieldset>
@@ -32,7 +34,7 @@
 					<div class="control-group">
 						<div class="controls">
 							<label class="checkbox">
-								<input type="checkbox" name="isEmbedded"{% if isEmbedded %} checked="checked"{%endif %} value="yes"> Solution box embedded on the activity page (single file)
+								<input type="checkbox" name="isEmbedded"{{#isEmbedded}} checked="checked"{{/isEmbedded}} value="yes"> Solution box embedded on the activity page (single file)
 							</label>
 						</div>
 					</div>
