@@ -20,6 +20,12 @@ post = ->
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
+
+	if request.data.isEmbedded
+		OpenLearning.activity.setSubmissionType 'file'
+	else
+		OpenLearning.activity.setSubmissionType 'multi-file'
+	
 	if not view.args? or view.args is ''
 		view.args = 'run'
 	
