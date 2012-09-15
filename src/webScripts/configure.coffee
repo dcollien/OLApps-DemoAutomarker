@@ -4,7 +4,7 @@ include "guards.js"
 template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
-fields = ['stdin', 'stdout', 'args', 'isEmbedded']
+fields = ['stdin', 'stdout', 'args']
 
 # POST and GET controllers
 post = ->
@@ -14,6 +14,14 @@ post = ->
 	for field in fields
 		view[field] = request.data[field]
 
+
+	if request.data.isEmbedded is 'yes'
+		OpenLearning.activity.setSubmissionType 'file'
+		view.isEmbedded = true
+	else
+		OpenLearning.activity.setSubmissionType 'multi-file'
+		view.isEmbedded = false
+
 	# set activity page data
 	try
 		OpenLearning.page.setData view, request.user
@@ -21,11 +29,7 @@ post = ->
 		view.error = 'Something went wrong: Unable to save data'
 
 
-	if request.data.isEmbedded
-		OpenLearning.activity.setSubmissionType 'file'
-	else
-		OpenLearning.activity.setSubmissionType 'multi-file'
-	
+
 	if not view.args? or view.args is ''
 		view.args = 'run'
 	
