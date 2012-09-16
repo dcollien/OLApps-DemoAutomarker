@@ -15,9 +15,12 @@ post = ->
 		filename: 'solution.c'
 		data: view.fileData
 
+	submission =
+		file: file
+
 	# set submission data
 	try
-		OpenLearning.activity.saveSubmission request.user, file, 'file'
+		OpenLearning.activity.saveSubmission request.user, submission, 'file'
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
@@ -28,8 +31,9 @@ get = ->
 
 	# get activity page data
 	try
-		view.fileData = (OpenLearning.activity.getSubmission request.user).data
-		view.error = JSON.stringify(OpenLearning.activity.getSubmission request.user)
+		submissionPage = (OpenLearning.activity.getSubmission request.user)
+		submission = submissionPage.submission
+		view.fileData = submission.file.data
 	catch err
 		view.error = 'Something went wrong: Unable to load data: ' + err
 

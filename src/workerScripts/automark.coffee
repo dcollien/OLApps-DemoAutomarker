@@ -14,7 +14,7 @@ if (data.submission instanceof Array)
 		files[file.filename] = file.data
 else
 	# single file
-	file = data.submission
+	file = data.submission.file
 	files[file.filename] = file.data
 
 # compile the files
