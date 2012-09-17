@@ -31,6 +31,8 @@ post = ->
 
 	setDefaults view
 
+	view.message = "Saved"
+
 	return view
 
 get = ->
