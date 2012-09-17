@@ -37,8 +37,27 @@
 										If checked, a text input area will appear on the activity page, rather than allowing file uploads.
 									</span>
 								</div>
+							</div>
 
+							<div class="control-group">
+								<div class="controls">
+									<label class="checkbox">
+										<input type="checkbox" name="commentExpectedOutput"{{#commentExpectedOutput}} checked="checked"{{/commentExpectedOutput}} value="yes"> Show expected <i>stdout</i> in feedback
+									</label>
+									<span class="help-block">
+										If checked, feedback will show the expected <i>stdout</i> compared to the program's <i>stdout</i> if the specification is not met.
+									</span>
+								</div>
+							</div>
 
+							<div class="control-group">
+								<label class="control-label" for="commentReturnVal">Exit Status Feedback</label>
+								<div class="controls">
+									<textarea name="commentReturnVal" id="commentReturnVal" style="width: 320px; height: 120px;">{{commentReturnVal}}</textarea>
+									<span class="help-block">
+										Feedback given if the exit status (return code) doesn't match the specification.
+									</span>
+								</div>
 							</div>
 
 						</fieldset>

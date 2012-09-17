@@ -4,7 +4,7 @@ include "guards.js"
 template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
-fields = ['stdin', 'stdout', 'args', 'returnValue']
+fields = ['stdin', 'stdout', 'args', 'returnValue', 'commentReturnVal']
 
 setDefaults = (view) ->
 	if not view.args? or view.args is ''
@@ -28,6 +28,11 @@ post = ->
 	else
 		OpenLearning.activity.setSubmissionType 'multi-file'
 		view.isEmbedded = false
+
+	if request.data.commentExpectedOutput is 'yes'
+		view.commentExpectedOutput = true
+	else
+		view.commentExpectedOutput = false
 
 	# set activity page data
 	try
@@ -57,8 +62,11 @@ get = ->
 	if data.isEmbedded
 		view.isEmbedded = true
 
-	setDefaults view
+	if data.commentExpectedOutput
+		view.commentExpectedOutput = true
 
+	setDefaults view
+	
 	return view
 
 

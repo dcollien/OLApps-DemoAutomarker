@@ -9,6 +9,14 @@
 		<script src="{{codemirror_mode_js}}"></script>
 
 		{{&app_init_js}}
+
+		<style type="text/css">
+		.CodeMirror-scroll {
+			height: auto;
+			overflow-y: hidden;
+			overflow-x: auto;
+		}
+		</style>
 	</head>
 	<body>
 		{{#error}}<br/> <br/><div class="alert">{{error}}</div><br/> <br/>{{/error}}

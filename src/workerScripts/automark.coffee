@@ -46,8 +46,9 @@ if files isnt null
 
 		# remove \r characters from provided stdout
 		expectedOut = (activityData.stdout.replace '\r', '')
+		expectedReturnValue = parseInt activityData.returnValue
 
-		if (programStdout is expectedOut)
+		if (programStdout is expectedOut) and (environment.returnValue is expectedReturnValue)
 			# matches, woohoo!
 			markObject = { completed: true, comments: '**You are Awesome!**' }
 		else
