@@ -34,8 +34,9 @@ get = ->
 	try
 		submissionPage = (OpenLearning.activity.getSubmission request.user)
 		submission = submissionPage.submission
-		view.fileData = submission.file.data
-		view.url = submissionPage.url
+		if submission.file
+			view.fileData = submission.file.data
+			view.url = submissionPage.url
 	catch err
 		view.error = 'Something went wrong: Unable to load data: ' + err
 
