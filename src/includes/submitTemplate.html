@@ -25,39 +25,25 @@
 		{{#message}}<br/> <br/><div class="alert alert-success">{{message}}</div><br/> <br/>{{/message}}
 
 		<div class="container" style="width: 740px">
-			<form method="post" class="form-horizontal">
-				<fieldset>
-					{{&csrf_token}}
-					
-					<legend>Solution:</legend>
+			<fieldset>
+				<legend>Submitted Solution:</legend>
 
-					<div class="control-group">
-						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
-						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
-					</div>
+				<div class="control-group">
+					<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
+					{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
+				</div>
 
-					<div class="form-actions">
-						<a href="#" id="submitButton" class="btn btn-success" style="float: right">Submit for Auto-marking</a>
-						<button type="submit" class="btn btn-primary">Save changes</button>
-					</div>
-				</fieldset>
-			</form>
-			<form method="post" action="./submit" class="hide" id="submitForm">
-				{{&csrf_token}}
-			</form>
+			</fieldset>
 		</div>
 
 		<script>
 			var editor = CodeMirror.fromTextArea( document.getElementById("fileData"), {
 				lineNumbers: true,
 				mode: "text/x-csrc",
+				readOnly: true,
 				onUpdate: function( ) {
 					window.app.resize();
 				}
-			} );
-
-			$('#submitButton').click( function( ) {
-				$('#submitForm').submit();
 			} );
 		</script>
 	</body>
