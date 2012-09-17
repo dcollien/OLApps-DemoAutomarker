@@ -45,12 +45,12 @@
 		<script>
 			var editor = CodeMirror.fromTextArea( document.getElementById("fileData"), {
 				lineNumbers: true,
-				mode: "text/x-csrc"
+				mode: "text/x-csrc",
+				onUpdate: function( ) {
+					window.app.resize();
+				}
 			} );
 
-			editor.onUpdate( function( ) {
-				window.app.resize();
-			} );
 		</script>
 	</body>
 </html>
