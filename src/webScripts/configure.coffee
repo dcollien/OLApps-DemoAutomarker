@@ -4,7 +4,7 @@ include "guards.js"
 template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
-fields = ['stdin', 'stdout', 'args']
+fields = ['stdin', 'stdout', 'args', 'returnValue']
 
 # POST and GET controllers
 post = ->

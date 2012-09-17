@@ -31,7 +31,7 @@
 							<div class="control-group">
 								<div class="controls">
 									<label class="checkbox">
-										<input type="checkbox" name="isEmbedded"{{#isEmbedded}} checked="checked"{{/isEmbedded}} value="yes"> Solution box embedded on the activity page (single file)
+										<input type="checkbox" name="isEmbedded"{{#isEmbedded}} checked="checked"{{/isEmbedded}} value="yes"> Program source editing embedded on the activity page (single file).
 									</label>
 									<span class="help-block">
 										If checked, a text input area will appear on the activity page, rather than allowing file uploads.
@@ -76,8 +76,18 @@
 								</div>
 							</div>
 
-							<div class="form-actions">
-								<button type="submit" class="btn btn-primary">Save changes</button>
+							<div class="control-group">
+								<label class="control-label" for="stdout">Stdout</label>
+								<div class="controls">
+									<textarea name="stdout" id="stdout" style="width: 320px; height: 120px;">{{stdout}}</textarea>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label" for="returnValue"><pre>main</pre> Return Value</label>
+								<div class="controls">
+									<textarea name="returnValue" id="returnValue" style="width: 320px; height: 120px;">{{returnValue}}</textarea>
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -94,6 +104,11 @@
 					window.app.resize();
 				} );
 				</script>
+
+
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
 
 			</form>
 		</div>

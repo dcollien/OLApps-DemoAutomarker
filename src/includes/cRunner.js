@@ -53,7 +53,7 @@ var CRunner = {
     
       eval( compiledCode );
       var module = getModule( environment );
-      module.run( args );
+      environment.returnValue = module.run( args );
       return true;
     } catch (err) {
       return err;
