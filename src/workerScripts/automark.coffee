@@ -21,6 +21,11 @@ else
 	markObject = { completed: false, comments: 'No files in submission' }
 	files = null
 
+if activityData.numCFiles
+	for i in [0...(activityData.numCFiles)]
+		file = JSON.parse activityData['CFile' + i]
+		files[file.name] = file.data
+
 if files isnt null
 	# compile the files
 	compiledCode = CRunner.compileFiles files
@@ -53,6 +58,7 @@ if files isnt null
 			markObject = { completed: true, comments: '**You are Awesome!**' }
 		else
 			# better luck next time
+			# TODO: proper feedback
 			comments = '{{{\n'
 			comments += 'Expected: ' + JSON.stringify( expectedOut ) + '\n'
 			comments += 'Program output: ' + JSON.stringify( programStdout ) + '\n' 

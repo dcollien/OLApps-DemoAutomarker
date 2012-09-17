@@ -13,6 +13,13 @@ setDefaults = (view) ->
 	if not view.returnValue? or view.returnValue is ''
 		view.returnValue = '0'
 
+	view.cFiles = []
+	for i in [0...view.numCFiles]
+		file = JSON.parse data['CFile' + i]
+		file.index = i
+		view.cFiles.push file
+
+
 # POST and GET controllers
 post = ->
 	# grab data from POST
@@ -20,6 +27,13 @@ post = ->
 
 	for field in fields
 		view[field] = request.data[field]
+
+	view.numCFiles = parseInt request.data.numCFiles
+	for i in [0...view.numCFiles]
+		view['CFile' + i] = JSON.stringify({
+				name: request.data['CFileName' + i]
+				data: request.data['CFileData' + i]
+			})
 
 
 	if request.data.isEmbedded is 'yes'
@@ -66,7 +80,7 @@ get = ->
 		view.commentExpectedOutput = true
 
 	setDefaults view
-	
+
 	return view
 
 

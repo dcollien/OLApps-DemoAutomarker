@@ -105,15 +105,57 @@
 					</div>
 
 					<div class="tab-pane" id="tab-files">
-						<fieldset>
-							TODO
+						<fieldset id="files">
+							<input type="hidden" name="numCFiles" id="numCFiles" value="{{numCFiles}}">
+							{{#cFiles}}
+							<div class="control-group" class="fileGroup">
+								<label class="control-label">
+									<input type="text" class="input-large CFileName" name="CFileName{{index}}" value="{{name}}">
+								</label>
+								<div class="controls">
+									<textarea name="CFileData{{index}}" id="CFileData{{index}}" style="width: 320px; height: 120px;" class="CFileData">{{data}}</textarea>
+								</div>
+
+								<div class="pull-right">
+									<a href="#" class="removeFile" class="btn btn-danger"><i class="icon-minus"></i> Delete</a>
+								</div>
+								<hr/>
+							</div>
+							{{/cFiles}}
 						</fieldset>
+						<a href="#" id="addCFile" class="btn"><i class="icon-plus"></i> Add C File</a>
 					</div>
 				</div>
 
 				<script>
 				$('a[data-toggle="tab"]').on('shown', function ( e ) {
 					window.app.resize();
+				} );
+
+				$('.removeFile').click( function( ) {
+					$(this).parent( '.fileGroup' ).remove();
+					var numFiles = 0;
+					$('.fileGroup').each( function( index, element ) {
+						$(element).child( '.CFileName' ).attr( 'id', 'CFileName' + index );
+						$(element).child( '.CFileData' ).attr( 'id', 'CFileData' + index );
+						numFiles += 1;
+					} );
+					$('#numCFiles').val( numFiles );
+					return false;
+				} );
+
+				$('#addCFile').click( function( ) {
+					var group = '\
+<div class="control-group"> \
+		<label class="control-label"> \
+		<input type="text" class="input-large" name="CFileName' + index + '"> \
+		</label> \
+		<div class="controls"> \
+		<textarea name="CFileData' + index + '" id="CFileData' + index + '" style="width: 320px; height: 120px;"></textarea> \
+	</div> \
+</div>';
+					$('#files').append( $(group) );
+					return false;
 				} );
 				</script>
 

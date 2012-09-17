@@ -45,6 +45,15 @@ get = ->
 		if submission.file
 			view.fileData = submission.file.data
 			view.url = submissionPage.url
+
+		marks = (OpenLearning.activity.getMarks [request.user])[request.user]
+		if marks and marks.completed
+			view.completed = true
+			view.message = "You have completed this activity"
+		else
+			view.completed = false
+			
+
 	catch err
 		view.error = 'Something went wrong: Unable to load data: ' + err
 

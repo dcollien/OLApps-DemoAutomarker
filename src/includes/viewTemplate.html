@@ -37,7 +37,7 @@
 					</div>
 
 					<div class="form-actions">
-						<a href="#" id="submitButton" class="btn btn-success" style="float: right">Submit for Auto-marking</a>
+						<a href="#" id="submitButton" class="btn btn-success" style="float: right">{{#completed}}Re-{{/completed}}Submit for Auto-marking</a>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</fieldset>
@@ -58,6 +58,7 @@
 
 			$('#submitButton').click( function( ) {
 				$('#submitForm').submit();
+				return false;
 			} );
 		</script>
 	</body>
