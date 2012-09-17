@@ -21,6 +21,7 @@ setDefaults = (view) ->
 
 # POST and GET controllers
 post = ->
+	view = {}
 	# submit
 	try
 		submitSuccess = OpenLearning.activity.submit request.user
@@ -45,7 +46,7 @@ get = ->
 		view.message = "Automarking Completed"
 	else
 		view.message = "Waiting for Automarking"
-	
+
 	return view
 
 
