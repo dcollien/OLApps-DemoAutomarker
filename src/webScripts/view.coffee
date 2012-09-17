@@ -6,8 +6,8 @@ accessDeniedTemplate = include "accessDeniedTemplate.html"
 
 setDefaults = (view) ->
 	view.codemirror_js = mediaURL 'codemirror.js'
-	view.codemirror_mode_js = 'clike.js'
-	view.codemirror_css = 'codemirror.css'
+	view.codemirror_mode_js = mediaURL 'clike.js'
+	view.codemirror_css = mediaURL 'codemirror.css'
 
 # POST and GET controllers
 post = ->
