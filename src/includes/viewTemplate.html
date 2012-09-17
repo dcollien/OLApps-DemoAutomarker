@@ -13,6 +13,7 @@
 		<style type="text/css">
 		.CodeMirror-scroll {
 			height: auto;
+			min-height: 420px;
 			overflow-y: hidden;
 			overflow-x: auto;
 		}
@@ -32,7 +33,7 @@
 
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
-						{{#url}}<span class="help-block" style="font-size: 8px">Permalink: {{url}}</span>{{/url}}
+						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
 					</div>
 
 					<div class="form-actions">
