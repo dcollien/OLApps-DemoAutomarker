@@ -4,6 +4,10 @@ include "guards.js"
 template = include "viewTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
+setDefaults = (view) ->
+	view.codemirror_js = mediaURL 'codemirror.js'
+	view.codemirror_mode_js = 'clike.js'
+	view.codemirror_css = 'codemirror.css'
 
 # POST and GET controllers
 post = ->
@@ -25,6 +29,8 @@ post = ->
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
+	setDefaults view
+
 	return view
 
 get = ->
@@ -39,6 +45,8 @@ get = ->
 			view.url = submissionPage.url
 	catch err
 		view.error = 'Something went wrong: Unable to load data: ' + err
+
+	setDefaults view
 
 	return view
 

@@ -6,6 +6,13 @@ accessDeniedTemplate = include "accessDeniedTemplate.html"
 
 fields = ['stdin', 'stdout', 'args', 'returnValue']
 
+setDefaults = (view) ->
+	if not view.args? or view.args is ''
+		view.args = 'run'
+
+	if not view.returnValue? or view.returnValue is ''
+		view.returnValue = '0'
+
 # POST and GET controllers
 post = ->
 	# grab data from POST
@@ -28,8 +35,7 @@ post = ->
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
-	if not view.args? or view.args is ''
-		view.args = 'run'
+	setDefaults view
 
 	view.message = 'Saved'
 	return view
@@ -50,6 +56,8 @@ get = ->
 
 	if data.isEmbedded
 		view.isEmbedded = true
+
+	setDefaults view
 
 	return view
 
