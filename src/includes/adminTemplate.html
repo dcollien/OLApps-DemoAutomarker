@@ -88,6 +88,13 @@
 						</fieldset>
 					</div>
 				</div>
+
+				<script>
+				$('a[data-toggle="tab"]').on('shown', function ( e ) {
+					window.app.resize();
+				} );
+				</script>
+
 			</form>
 		</div>
 	</body>
