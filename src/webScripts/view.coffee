@@ -73,6 +73,7 @@ get = ->
 		else
 			view.completed = false
 			if view.isSubmitted
+				# or it is wrong?
 				view.message = "Your submission is awaiting Auto-marking"
 
 	setDefaults view
