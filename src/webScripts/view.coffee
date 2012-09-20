@@ -62,7 +62,7 @@ get = ->
 		catch err
 			if !view.error
 				view.error = 'Something went wrong: '
-			view.error += 'Unable to load marks '
+			view.error += 'Unable to load marks ' + JSON.stringify(err)
 
 		if marks
 			view.comments = marks.comments

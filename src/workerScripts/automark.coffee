@@ -1,4 +1,6 @@
 include "cRunner.js"
+include "diff_match_patch.js"
+include "diff_creole.js"
 
 # get activity app data from openlearning
 activityData = OpenLearning.page.getData( )
@@ -38,10 +40,13 @@ if files isnt null
 		markObject = { completed: false, comments: comments }
 	else
 		# collect stdout and provide stdin
+		programStdin = (activityData.stdin.replace '\r', '')
 		programStdout = ''
+		programStderr = ''
 		environment =
-			stdin: -> (activityData.stdin.replace '\r', '')
+			stdin: -> programStdin
 			stdout: (output) -> programStdout += output + '\n'
+			stderr: (error) -> programStderr += error + '\n'
 
 		# parse commandline arguments into a list
 		args = (arg.replace(/^\"|\"$/g, '') for arg in activityData.args.match(/\w+|"[^"]+"/g))
@@ -53,18 +58,46 @@ if files isnt null
 		expectedOut = (activityData.stdout.replace '\r', '')
 		expectedReturnValue = parseInt activityData.returnValue
 
+		if activityData.isStdoutStripped
+			programStdout = programStdout.replace(/\n/g , '')
+			expectedOut = expectedOut.replace(/\n/g, '')
+
 		if (programStdout is expectedOut) and (environment.returnValue is expectedReturnValue)
 			# matches, woohoo!
-			markObject = { completed: true, comments: '**You are Awesome!**' }
-		else
-			# better luck next time
-			# TODO: proper feedback
-			comments = '{{{\n'
-			comments += 'Expected: ' + JSON.stringify( expectedOut ) + '\n'
-			comments += 'Program output: ' + JSON.stringify( programStdout ) + '\n' 
-			comments += '}}}\n'
+			correctComment = activityData.correctComment
+			if !correctComment
+				correctComment = "Correct!"
 
-			markObject = { completed: false, comments: comments }
+			markObject = { completed: true, comments: correctComment }
+		else
+
+			incorrectComment = activityData.incorrectComment
+			
+			if !incorrectComment
+				incorrectComment = "Incorrect."
+
+			incorrectComment = incorrectComment.replace /\[\[\s*stdin\s*\]\]/g, programStdin
+			incorrectComment = incorrectComment.replace /\[\[\s*stdout\s*\]\]/g, programStdout
+			incorrectComment = incorrectComment.replace /\[\[\s*stderr\s*\]\]/g, programStderr
+
+
+			incorrectComment = incorrectComment.replace /\[\[\s*exitCode\s*\]\]/g, environment.returnValue
+
+			incorrectComment = incorrectComment.replace /\[\[\s*expectedStdout\s*\]\]/g, expectedOut
+			incorrectComment = incorrectComment.replace /\[\[\s*expectedExitCode\s*\]\]/g, (''+expectedReturnValue)
+
+			if (incorrectComment.match /\[\[\s*stdoutDiff\s*\]\]/g)
+				dmp = new diff_match_patch()
+				dmp.Diff_Timeout = 1.0
+
+				diff = dmp.diff_main programStdout, programStderr
+				dmp.diff_cleanupSemantic diff
+				creole = dmp.diff_prettyCreole diff
+
+				incorrectComment = incorrectComment.replace /\[\[\s*stdoutDiff\s*\]\]/g, creole
+
+			# better luck next time
+			markObject = { completed: false, comments: incorrectComment }
 
 # bundle this mark into a marks update object
 marks = {}

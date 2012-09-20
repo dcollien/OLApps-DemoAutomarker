@@ -38,28 +38,35 @@
 									</span>
 								</div>
 							</div>
-							<!--
+
 							<div class="control-group">
+								<label class="control-label" for="correctComment">Feedback when Correct</label>
 								<div class="controls">
-									<label class="checkbox">
-										<input type="checkbox" name="commentExpectedOutput"{{#commentExpectedOutput}} checked="checked"{{/commentExpectedOutput}} value="yes"> Show expected <i>stdout</i> in feedback
-									</label>
+									<textarea name="correctComment" id="correctComment" style="width: 320px; height: 120px;">{{correctComment}}</textarea>
 									<span class="help-block">
-										If checked, feedback will show the expected <i>stdout</i> compared to the program's <i>stdout</i> if the specification is not met.
+										Markup in Creole. Feedback given if the program performs to the specification
 									</span>
 								</div>
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="commentReturnVal">Exit Status Feedback</label>
+								<label class="control-label" for="incorrectComment">Feedback when Incorrect</label>
 								<div class="controls">
-									<textarea name="commentReturnVal" id="commentReturnVal" style="width: 320px; height: 120px;">{{commentReturnVal}}</textarea>
+									<textarea name="incorrectComment" id="incorrectComment" style="width: 320px; height: 120px;">{{incorrectComment}}</textarea>
 									<span class="help-block">
-										Feedback given if the exit status (return code) doesn't match the specification.
+										Markup in Creole. Feedback given if the program does not perform to the specification. The following tags may be used to insert extra information:
+										<ul>
+											<li><code>[[ stdin ]]</code></li>
+											<li><code>[[ stdout ]]</code></li>
+											<li><code>[[ stderr ]]</code></li>
+											<li><code>[[ exitCode ]]</code></li>
+											<li><code>[[ expectedStdout ]]</code></li>
+											<li><code>[[ expectedExitCode ]]</code></li>
+											<li><code>[[ stdoutDiff ]]</code></li>
+										</ul>
 									</span>
 								</div>
 							</div>
-							-->
 						</fieldset>
 
 					</div>
@@ -85,6 +92,9 @@
 								<label class="control-label" for="stdin">Stdin</label>
 								<div class="controls">
 									<textarea name="stdin" id="stdin" style="width: 320px; height: 120px;">{{stdin}}</textarea>
+									<span class="help-block">
+										Data given to the program over stdin.
+									</span>
 								</div>
 							</div>
 
@@ -92,6 +102,14 @@
 								<label class="control-label" for="stdout">Stdout</label>
 								<div class="controls">
 									<textarea name="stdout" id="stdout" style="width: 320px; height: 120px;">{{stdout}}</textarea>
+									<span class="help-block">
+										Expected value of stdout after execution
+									</span>
+
+									<br/>
+									<label class="checkbox">
+										<input type="checkbox" name="isStdoutStripped"{{#isStdoutStripped}} checked="checked"{{/isStdoutStripped}} value="yes"> Ignore new-line characters.
+									</label>
 								</div>
 							</div>
 
