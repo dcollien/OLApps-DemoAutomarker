@@ -46,16 +46,20 @@ get = ->
 			view.fileData = submission.file.data
 			view.url = submissionPage.url
 
+		view.isSubmitted = (OpenLearning.activity.isSubmitted request.user)
+
 		marks = (OpenLearning.activity.getMarks [request.user])[request.user]
 		if marks and marks.completed
 			view.completed = true
 			view.message = "You have completed this activity"
 		else
 			view.completed = false
+			if view.isSubmitted
+				view.message = "Your submission is awaiting Auto-marking"
 			
 
 	catch err
-		view.error = 'Something went wrong: Unable to load data: ' + err
+		view.error = 'Something went wrong: Unable to load data'
 
 	setDefaults view
 
