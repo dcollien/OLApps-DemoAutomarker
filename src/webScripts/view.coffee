@@ -41,14 +41,29 @@ get = ->
 	# get activity page data
 	try
 		submissionPage = (OpenLearning.activity.getSubmission request.user)
+	catch err
+		view.error = 'Something went wrong: Unable to load submission'
+
+	if !view.error
 		submission = submissionPage.submission
 		if submission.file
 			view.fileData = submission.file.data
 			view.url = submissionPage.url
 
-		view.isSubmitted = (OpenLearning.activity.isSubmitted request.user)
+		try
+			view.isSubmitted = (OpenLearning.activity.isSubmitted request.user)
+		catch err
+			if !view.error
+				view.error = 'Something went wrong: '
+			view.error += 'Unable to load submitted status '
 
-		marks = (OpenLearning.activity.getMarks [request.user])[request.user]
+		try
+			marks = (OpenLearning.activity.getMarks [request.user])[request.user]
+		catch err
+			if !view.error
+				view.error = 'Something went wrong: '
+			view.error += 'Unable to load marks '
+
 		if marks and marks.completed
 			view.completed = true
 			view.message = "You have completed this activity"
@@ -56,10 +71,6 @@ get = ->
 			view.completed = false
 			if view.isSubmitted
 				view.message = "Your submission is awaiting Auto-marking"
-			
-
-	catch err
-		view.error = 'Something went wrong: Unable to load data'
 
 	setDefaults view
 
