@@ -29,17 +29,28 @@
 				<fieldset>
 					{{&csrf_token}}
 					
-					<legend>Solution:</legend>
+					<legend>My Solution:</legend>
 
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
 						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
 					</div>
 
-					<div class="form-actions">
-						<a href="#" id="submitButton" class="btn btn-success" style="float: right">Save and {{#completed}}Re-{{/completed}}Submit for Auto-marking</a>
+					<div id="submitButtons" class="form-actions{{#completed}} hide{{/completed}}">
+						<a href="#" id="submitButton" class="btn btn-success" style="float: right">Save and {{#isSubmitted}}Re-{{/isSubmitted}}Submit for Auto-marking</a>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
 					</div>
+
+					{{#completed}}
+					<a href="#" id="submissionReditButton" class="btn">Re-edit Submission</a>
+					<script>
+						$('#submissionReditButton').click( function( ) {
+							$('#submitButtons').show();
+							$(this).hide();
+							return false;
+						} );
+					</script>
+					{{/completed}}
 				</fieldset>
 			</form>
 		</div>
