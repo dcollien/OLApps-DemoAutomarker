@@ -30,6 +30,15 @@
 					{{&csrf_token}}
 					
 					<legend>My Solution:</legend>
+					<br>
+
+					<b>Feedback:</b><br>
+					{{#comments}}
+					<div class="well">
+						{{&comments}}
+					</div>
+					{{/comments}}
+					<br>
 
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>

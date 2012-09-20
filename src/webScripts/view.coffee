@@ -58,11 +58,14 @@ get = ->
 			view.error += 'Unable to load submitted status '
 
 		try
-			marks = (OpenLearning.activity.getMarks [request.user])[request.user]
+			marks = (OpenLearning.activity.getLatestMark request.user)
 		catch err
 			if !view.error
 				view.error = 'Something went wrong: '
 			view.error += 'Unable to load marks '
+
+		if marks
+			view.comments = marks.comments
 
 		if marks and marks.completed
 			view.completed = true
