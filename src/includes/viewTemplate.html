@@ -25,7 +25,7 @@
 		{{#message}}<br/> <br/><div class="alert alert-success">{{message}}</div><br/> <br/>{{/message}}
 
 		<div class="container" style="width: 740px">
-			<form method="post" class="form-horizontal">
+			<form method="post" id="submitForm" class="form-horizontal">
 				<fieldset>
 					{{&csrf_token}}
 					
@@ -42,9 +42,6 @@
 					</div>
 				</fieldset>
 			</form>
-			<form method="post" action="./submit" class="hide" id="submitForm">
-				{{&csrf_token}}
-			</form>
 		</div>
 
 		<script>
@@ -57,7 +54,7 @@
 			} );
 
 			$('#submitButton').click( function( ) {
-				$('#submitForm').submit();
+				$('#submitForm').attr('action', './submit').submit();
 				return false;
 			} );
 		</script>

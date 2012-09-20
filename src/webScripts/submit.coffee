@@ -22,8 +22,21 @@ setDefaults = (view) ->
 # POST and GET controllers
 post = ->
 	view = {}
-	# submit
+	# grab data from POST
+	view =
+		fileData: request.data.fileData
+
+	file =
+		filename: 'solution.c'
+		data: view.fileData
+
+	submission =
+		file: file
+
+	# set submission data
 	try
+		submissionData = OpenLearning.activity.saveSubmission request.user, submission, 'file'
+		view.url = submissionData.url
 		submitSuccess = OpenLearning.activity.submit request.user
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
