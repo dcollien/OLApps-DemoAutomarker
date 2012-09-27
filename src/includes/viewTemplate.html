@@ -22,7 +22,7 @@
 	<body>
 		{{#error}}<br/> <br/><div class="alert">{{error}}</div><br/> <br/>{{/error}}
 
-		{{#message}}<br/> <br/><div class="alert alert-success">{{message}}</div><br/> <br/>{{/message}}
+		{{#message}}<br/> <br/><div class="alert alert-info">{{message}}</div><br/> <br/>{{/message}}
 
 		<div class="container" style="width: 740px">
 			<form method="post" id="submitForm" class="form-horizontal">
@@ -32,35 +32,23 @@
 					<legend>My Solution:</legend>
 					<br>
 
-					<b>Feedback:</b><br>
 					{{#comments}}
+					<b>Feedback:</b><br>
 					<div class="well">
 						{{&comments}}
 					</div>
-					{{/comments}}
 					<br>
+					{{/comments}}
 
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
 						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
 					</div>
 
-					<div id="submitButtons" class="form-actions{{#completed}} hide{{/completed}}">
-						<a href="#" id="submitButton" class="btn btn-success" style="float: right">Save and {{#isSubmitted}}Re-{{/isSubmitted}}Submit for Auto-marking</a>
+					<div id="submitButtons" class="form-actions">
+						<a href="#" id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right">Save and Auto-Mark {{#completed}}Again{{/completed}}</a>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
 					</div>
-
-					{{#completed}}
-					<a href="#" id="submissionReditButton" class="btn">Re-edit</a>
-					<script>
-						$('#submissionReditButton').click( function( ) {
-							$('#submitButtons').show();
-							$(this).hide();
-							window.app.resize();
-							return false;
-						} );
-					</script>
-					{{/completed}}
 				</fieldset>
 			</form>
 		</div>

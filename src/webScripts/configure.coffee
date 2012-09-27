@@ -5,61 +5,43 @@ template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
 fields = ['stdin', 'stdout', 'args', 'returnValue', 'correctComment', 'incorrectComment']
+booleanFields = ['isInline', 'isStdoutStripped']
 
 setDefaults = (view) ->
-	if not view.args? or view.args is ''
-		view.args = 'myProgram'
-
 	if not view.returnValue? or view.returnValue is ''
 		view.returnValue = '0'
-
-	view.cFiles = []
-	for i in [0...view.numCFiles]
-		file = JSON.parse data['CFile' + i]
-		file.index = i
-		view.cFiles.push file
-
 
 # POST and GET controllers
 post = ->
 	# grab data from POST
 	view = {}
 
+	# this app always has something embedded in the activity page
+	view.isEmbedded = true
+
+	# this app is automarked
+	view.isAutomarked = true
+
 	for field in fields
 		view[field] = request.data[field]
 
-	view.numCFiles = parseInt request.data.numCFiles
-	for i in [0...view.numCFiles]
-		view['CFile' + i] = JSON.stringify({
-				name: request.data['CFileName' + i]
-				data: request.data['CFileData' + i]
-			})
+	for field in booleanFields
+		if request.data[field] is 'yes'
+			view[field] = true
+		else
+			view[field] = false
 
 
-	if request.data.isEmbedded is 'yes'
+	if view.isInline
 		OpenLearning.activity.setSubmissionType 'file'
-		view.isEmbedded = true
 	else
 		OpenLearning.activity.setSubmissionType 'multi-file'
-		view.isEmbedded = false
-
-	if request.data.isStdoutStripped is 'yes'
-		view.isStdoutStripped = true
-	else
-		view.isStdoutStripped = false
-
-	if request.data.commentExpectedOutput is 'yes'
-		view.commentExpectedOutput = true
-	else
-		view.commentExpectedOutput = false
 
 	# set activity page data
 	try
-		OpenLearning.page.setData view, request.user
+		view.url = (OpenLearning.page.setData view, request.user).url
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
-
-	setDefaults view
 
 	view.message = 'Saved'
 	return view
@@ -69,7 +51,9 @@ get = ->
 
 	# get activity page data
 	try
-		data = OpenLearning.page.getData( request.user )
+		page = OpenLearning.page.getData( request.user )
+		data = page.data
+		view.url = page.url
 	catch err
 		view.error = 'Something went wrong: Unable to load data'
 	
@@ -78,20 +62,23 @@ get = ->
 		for field in fields
 			view[field] = data[field]
 
-	if data.isEmbedded
-		view.isEmbedded = true
+	if data.isInline
+		view.isInline = true
 
-	if data.commentExpectedOutput
-		view.commentExpectedOutput = true
-
-	setDefaults view
+	if data.isStdoutStripped
+		view.isStdoutStripped = true
 
 	return view
 
 
 checkPermission 'write', accessDeniedTemplate, ->
+	view = {}
 	if request.method is 'POST'
-		render template, post()
+		view = post()
 	else
-		render template, get()
+		view = get()
+
+	setDefaults view
+
+	render template, view
 

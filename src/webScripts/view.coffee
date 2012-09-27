@@ -21,11 +21,13 @@ post = ->
 
 	submission =
 		file: file
+		metadata: {
+			compiled: false
+		}
 
 	# set submission data
 	try
 		submissionData = OpenLearning.activity.saveSubmission request.user, submission, 'file'
-		view.url = submissionData.url
 	catch err
 		view.error = 'Something went wrong: Unable to save data'
 
@@ -42,7 +44,7 @@ get = ->
 	try
 		submissionPage = (OpenLearning.activity.getSubmission request.user)
 	catch err
-		view.error = 'Something went wrong: Unable to load submission'
+		view.error = 'Something went wrong: Unable to load submission. '
 
 	if !view.error
 		submission = submissionPage.submission
@@ -50,31 +52,42 @@ get = ->
 			view.fileData = submission.file.data
 			view.url = submissionPage.url
 
+		if submission.metadata
+			view.compiled = submission.metadata.compiled
+			view.compileError = submission.metadata.compileError
+			view.isCorrect = submission.metadata.isCorrect
 		try
-			view.isSubmitted = (OpenLearning.activity.isSubmitted request.user)
+			view.status = (OpenLearning.activity.getStatus request.user)
 		catch err
 			if !view.error
 				view.error = 'Something went wrong: '
-			view.error += 'Unable to load submitted status '
+			view.error += 'Unable to load submitted status. '
 
 		try
-			marks = (OpenLearning.activity.getLatestMark request.user)
+			mark = (OpenLearning.activity.getLatestMark request.user)
 		catch err
 			if !view.error
 				view.error = 'Something went wrong: '
-			view.error += 'Unable to load marks ' + JSON.stringify(err)
+			view.error += 'Unable to load marking information. '
 
-		if marks
-			view.comments = marks.comments
+		if mark
+			view.comments = mark.comments
 
-		if marks and marks.completed
+		if (view.compileError)
+			view.message = "There was a problem compiling your program."
+		else if (view.isCorrect is false)
+			view.message = "There was a problem running your program."
+		else if view.status is 'incomplete'
+			view.message = "Write your solution below:"
+			view.incomplete = true
+		else if view.status is 'pending'
+			view.message = "Your program is awaiting compilation and testing."
+			view.pending = true
+		else if view.status is 'completed'
+			view.message = "You have completed this task."
+		
+		if view.status is 'completed'	
 			view.completed = true
-			view.message = "You have completed this activity"
-		else
-			view.completed = false
-			if view.isSubmitted
-				# or it is wrong?
-				view.message = "Your submission is awaiting Auto-marking"
 
 	setDefaults view
 

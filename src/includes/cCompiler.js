@@ -45,19 +45,9 @@ var CRunner = {
     }
   },
 
-  runProgram: function( compiledCode, environment, args ) {
-    try {
-      var process = undefined;
-      var importScripts = undefined;
-      var window = undefined;
-    
-      eval( compiledCode );
-      var module = getModule( environment );
-      environment.returnValue = module.run( args );
-      return true;
-    } catch (err) {
-      return err;
-    }
+  runProgram: function( compiledCode, environment ) {
+		eval( compiledCode );
+		return Program(environment).run();
   }
 };
 

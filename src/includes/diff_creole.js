@@ -8,10 +8,10 @@ diff_match_patch.prototype.diff_prettyCreole = function(diffs) {
     var text = data.replace(pattern_para, '\\\\');
     switch (op) {
       case DIFF_INSERT:
-        creole[x] = '**' + text + '**';
+        creole[x] = '**' + text.replace('\\\\', '<<newline>>\\\\') + '**';
         break;
       case DIFF_DELETE:
-        creole[x] = '[-' + text + '-]';
+        creole[x] = '[-' + text.replace('\\\\', '<<newline>>\\\\') + '-]';
         break;
       case DIFF_EQUAL:
         creole[x] = text;

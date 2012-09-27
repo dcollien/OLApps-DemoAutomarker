@@ -32,6 +32,9 @@ post = ->
 
 	submission =
 		file: file
+		metadata: {
+			submitted: true
+		}
 
 	# set submission data
 	try
@@ -53,13 +56,13 @@ get = ->
 
 	setDefaults view
 
-	marks = (OpenLearning.activity.getMarks [request.user])[request.user]
+	status = (OpenLearning.activity.getStatus request.user)
 
-	if marks and marks.completed
-		view.message = "Automarking Completed"
+	if status is 'incomplete' or status is 'pending'
+		view.message = "Your program has been submitted and will be auto-marked soon"
 	else
-		view.message = "Waiting for Automarking"
-
+		view.message = "Automarking Completed"
+	
 	return view
 
 

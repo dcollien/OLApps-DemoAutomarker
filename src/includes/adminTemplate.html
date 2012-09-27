@@ -19,7 +19,7 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#tab-submission" data-toggle="tab">Submission</a></li>
 				<li><a href="#tab-spec" data-toggle="tab">Specification</a></li>
-				<!--<li><a href="#tab-files" data-toggle="tab">Files</a></li>-->
+				<li><a href="#tab-files" data-toggle="tab">Files</a></li>
 			</ul>
 
 			<form method="post" class="form-horizontal">
@@ -31,7 +31,7 @@
 							<div class="control-group">
 								<div class="controls">
 									<label class="checkbox">
-										<input type="checkbox" name="isEmbedded"{{#isEmbedded}} checked="checked"{{/isEmbedded}} value="yes"> Program source editing embedded on the activity page (single file).
+										<input type="checkbox" name="isInline"{{#isInline}} checked="checked"{{/isInline}} value="yes"> Program source editing embedded on the activity page (single file).
 									</label>
 									<span class="help-block">
 										If checked, a text input area will appear on the activity page, rather than allowing file uploads.
@@ -56,13 +56,13 @@
 									<span class="help-block">
 										Markup in Creole. Feedback given if the program does not perform to the specification. The following tags may be used to insert extra information:
 										<ul>
-											<li><code>[[ stdin ]]</code></li>
-											<li><code>[[ stdout ]]</code></li>
-											<li><code>[[ stderr ]]</code></li>
-											<li><code>[[ exitCode ]]</code></li>
-											<li><code>[[ expectedStdout ]]</code></li>
-											<li><code>[[ expectedExitCode ]]</code></li>
-											<li><code>[[ stdoutDiff ]]</code></li>
+											<li><code>&lt;&lt; stdin &gt;&gt;</code></li>
+											<li><code>&lt;&lt; stdout &gt;&gt;</code></li>
+											<li><code>&lt;&lt; stderr &gt;&gt;</code></li>
+											<li><code>&lt;&lt; exitCode &gt;&gt;</code></li>
+											<li><code>&lt;&lt; expectedStdout &gt;&gt;</code></li>
+											<li><code>&lt;&lt; expectedExitCode &gt;&gt;</code></li>
+											<li><code>&lt;&lt; stdoutDiff &gt;&gt;</code></li>
 										</ul>
 									</span>
 								</div>
@@ -81,9 +81,9 @@
 								<div class="controls">
 									<input type="text" class="input-xlarge" name="args" id="args" value="{{args}}">
 									<span class="help-block">
-										The commandline arguments for the program, including the program name. e.g.
+										The commandline arguments to give the program
 										<br/>
-										<span style="font-family: monospace;">myProgram -x 52 "hello world"</span>
+										<span style="font-family: monospace;">-x 52 "hello world"</span>
 									</span>
 								</div>
 							</div>
@@ -123,60 +123,16 @@
 					</div>
 
 					<div class="tab-pane" id="tab-files">
-						<fieldset id="files">
-							<input type="hidden" name="numCFiles" id="numCFiles" value="{{numCFiles}}">
-							{{#cFiles}}
-							<div class="control-group" class="fileGroup">
-								<label class="control-label">
-									<input type="text" class="input-large CFileName" name="CFileName{{index}}" value="{{name}}">
-								</label>
-								<div class="controls">
-									<textarea name="CFileData{{index}}" id="CFileData{{index}}" style="width: 320px; height: 120px;" class="CFileData">{{data}}</textarea>
-								</div>
 
-								<div class="pull-right">
-									<a href="#" class="removeFile" class="btn btn-danger"><i class="icon-minus"></i> Delete</a>
-								</div>
-								<hr/>
-							</div>
-							{{/cFiles}}
-							{{^cFiles}}No Extra C Files to Compile{{/cFiles}}
-						</fieldset>
-						<a href="#" id="addCFile" class="btn"><i class="icon-plus"></i> Add C File</a>
+						<a href="{{url}}/MarkingCode?action=edit&editor=multi-file&title=C%20Files" target="_blank">Additional files to include in testing.</a>
+						<br/>
+
+						<span class="help-block">
+							Add files to the above page which will be used in auto-marking.
+							All files given will be available to the compiler. <code>.c</code> files will be compiled. Files other than those with <code>.c</code> and <code>.h</code> extensions will be made available to the program at run-time.
+						</span>
 					</div>
 				</div>
-
-				<script>
-				$('a[data-toggle="tab"]').on('shown', function ( e ) {
-					window.app.resize();
-				} );
-
-				$('.removeFile').click( function( ) {
-					$(this).parent( '.fileGroup' ).remove();
-					var numFiles = 0;
-					$('.fileGroup').each( function( index, element ) {
-						$(element).child( '.CFileName' ).attr( 'id', 'CFileName' + index );
-						$(element).child( '.CFileData' ).attr( 'id', 'CFileData' + index );
-						numFiles += 1;
-					} );
-					$('#numCFiles').val( numFiles );
-					return false;
-				} );
-
-				$('#addCFile').click( function( ) {
-					var group = '\
-<div class="control-group"> \
-		<label class="control-label"> \
-		<input type="text" class="input-large" name="CFileName' + index + '"> \
-		</label> \
-		<div class="controls"> \
-		<textarea name="CFileData' + index + '" id="CFileData' + index + '" style="width: 320px; height: 120px;"></textarea> \
-	</div> \
-</div>';
-					$('#files').append( $(group) );
-					return false;
-				} );
-				</script>
 
 
 				<div class="form-actions">
