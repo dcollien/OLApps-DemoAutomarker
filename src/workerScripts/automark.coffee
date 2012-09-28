@@ -20,9 +20,11 @@ else
 	# collect stdout and provide stdin
 	programStdin = (activityData.stdin.replace '\r', '')
 	
-	# parse commandline arguments into a list
-	args = (arg.replace(/^\"|\"$/g, '') for arg in activityData.args.match(/\w+|"[^"]+"/g))
+	argsString = if activityData.args then activityData.args else ''
 
+	# parse commandline arguments into a list
+	args = (arg.replace(/^\"|\"$/g, '') for arg in argsString.match(/\w+|"[^"]+"/g))
+	
 	environment =
 		args: args
 		stdin: programStdin
