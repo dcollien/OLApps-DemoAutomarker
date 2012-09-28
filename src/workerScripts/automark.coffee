@@ -24,7 +24,7 @@ else
 	if activityData.args
 		# parse commandline arguments into a list
 		args = (arg.replace(/^\"|\"$/g, '') for arg in activityData.args.match(/\w+|"[^"]+"/g))
-	
+
 	environment =
 		args: args
 		stdin: programStdin
@@ -59,6 +59,8 @@ else
 	else
 		programStdout = output.stdout
 
+	programStderr = (output.stderr.replace '\r', '')
+
 	if (programStdout is expectedOut) and (output.exitCode is expectedReturnValue)
 		# matches, woohoo!
 		correctComment = activityData.correctComment
@@ -81,7 +83,7 @@ else
 		incorrectComment = incorrectComment.replace /<<\s*stderr\s*>>/g, programStderr
 
 
-		incorrectComment = incorrectComment.replace /<<\s*exitCode\s*>>/g, environment.returnValue
+		incorrectComment = incorrectComment.replace /<<\s*exitCode\s*>>/g, output.exitCode
 
 		incorrectComment = incorrectComment.replace /<<\s*expectedStdout\s*>>/g, activityData.stdout
 		incorrectComment = incorrectComment.replace /<<\s*expectedExitCode\s*>>/g, (''+expectedReturnValue)
