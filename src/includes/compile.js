@@ -7,13 +7,18 @@ compileSubmission = function(data, shouldSave) {
 
   try {
     activityData = OpenLearning.page.getData().data;
-    markingCodePage = OpenLearning.page.readSubpage('MarkingCode');
     submissionData = OpenLearning.activity.getSubmission(data.user);
   } catch (err) {
     log(err);
     return null;
   }
 
+  try {
+    markingCodePage = OpenLearning.page.readSubpage('MarkingCode');
+  } catch (err) {
+    markingCodePage = null;
+  }
+  
   files = {};
   error = null;
   submission = {};

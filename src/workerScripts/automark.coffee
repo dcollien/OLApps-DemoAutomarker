@@ -10,9 +10,9 @@ submission.metadata =
 
 if compilation is null or compilation.error
 	# there was a compile error
-	comments = '{{{\n'
+	comments = '\n{{{\n'
 	comments += if compilation then compilation.error else 'Compiler Error'
-	comments += '}}}\n'
+	comments += '\n}}}\n'
 	markObject = { completed: false, comments: comments }
 else
 	activityData = compilation.activityData
