@@ -58,7 +58,7 @@ get = ->
 			view.compiled = submission.metadata.compiled
 			view.compileError = submission.metadata.compileError
 			view.isCorrect = submission.metadata.isCorrect
-			
+
 			view.pending = submission.metadata.pending
 		try
 			view.status = (OpenLearning.activity.getStatus request.user)
@@ -96,7 +96,7 @@ get = ->
 			view.message = "Write your solution below:"
 			view.alertClass = "alert-info"
 			view.incomplete = true
-		else if view.status is 'pending'
+		else if view.pending or (view.status is 'pending')
 			view.messageHeader = "Awaiting Testing"
 			view.message = "Your program is awaiting compilation and testing."
 			view.alertClass = "alert-info"
