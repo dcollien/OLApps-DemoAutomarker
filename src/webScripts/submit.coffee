@@ -47,7 +47,7 @@ post = ->
 	setDefaults view
 
 	if not view.error
-		view.message = "Submitted for Automarking"
+		view.message = "Your program has been submitted for auto-marking. Check back again soon for your results."
 
 	return view
 

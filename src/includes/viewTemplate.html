@@ -77,7 +77,19 @@
 	<body>
 		{{#error}}<br/> <br/><div class="alert">{{error}}</div><br/> <br/>{{/error}}
 
-		{{#message}}<br/> <br/><div class="alert alert-info">{{message}}</div><br/> <br/>{{/message}}
+		{{#message}}
+		<br/> <br/>
+			<div class="alert {{alertClass}}">
+				<h4>{{messageHeader}}</h4>
+				{{message}}
+			</div>
+		<br/> <br/>
+		{{/message}}
+
+		{{#pending}}
+		<a href="./view" class="btn">Check if it's done</a>
+		<br/>
+		{{/pending}}
 
 		<div class="container" style="width: 740px">
 			<form method="post" id="submitForm" class="form-horizontal">
@@ -121,6 +133,10 @@
 				$('#submitForm').attr('action', './submit').submit();
 				return false;
 			} );
+
+			window.app.ready( function() {
+    			window.app.sendMessage( 'updateProgress', {} );
+    		} );
 		</script>
 	</body>
 </html>

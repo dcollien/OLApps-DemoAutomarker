@@ -74,17 +74,27 @@ get = ->
 			view.comments = mark.comments
 
 		if (view.compileError)
+			view.messageHeader = "Compile Error"
 			view.message = "There was a problem compiling your program."
+			view.alertClass = "alert-error alert-block"
 		else if (view.isCorrect is false)
+			view.messageHeader = "Problem in Testing"
 			view.message = "There was a problem running your program."
+			view.alertClass = "alert-block"
 		else if view.status is 'incomplete'
+			view.messageHeader = "Submit a Solution"
 			view.message = "Write your solution below:"
+			view.alertClass = "alert-info"
 			view.incomplete = true
 		else if view.status is 'pending'
+			view.messageHeader = "Awaiting Testing"
 			view.message = "Your program is awaiting compilation and testing."
+			view.alertClass = "alert-info"
 			view.pending = true
 		else if view.status is 'completed'
+			view.messageHeader = "Completed"
 			view.message = "You have completed this task."
+			view.alertClass = "alert-success"
 		
 		if view.status is 'completed'	
 			view.completed = true

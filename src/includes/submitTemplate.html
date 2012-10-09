@@ -13,7 +13,7 @@
 		<style type="text/css">
 		.CodeMirror-scroll {
 			height: auto;
-			min-height: 320px;
+			min-height: 120px;
 			overflow-y: hidden;
 			overflow-x: auto;
 		}
@@ -23,15 +23,15 @@
 		{{#error}}<br/> <br/><div class="alert">{{error}}</div><br/> <br/>{{/error}}
 
 		{{#message}}<br/> <br/><div class="alert alert-success">{{message}}</div><br/> <br/>{{/message}}
-
-		<a href="./view" class="btn">Return to Editing</a>
+		<a href="./view">&laquo; Return to submission page</a>
+		<br/>
 		<br/>
 		<div class="container" style="width: 740px">
 			<fieldset>
 				<legend>Submitted:</legend>
 
 				<div class="control-group">
-					<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
+					<textarea name="fileData" id="fileData" style="width: 640px;">{{fileData}}</textarea>
 					{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
 				</div>
 
