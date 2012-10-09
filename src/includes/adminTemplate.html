@@ -16,7 +16,7 @@
 
 
 		<div class="container">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="options-tabs">
 				<li class="active"><a href="#tab-submission" data-toggle="tab">Submission</a></li>
 				<li><a href="#tab-spec" data-toggle="tab">Specification</a></li>
 				<li><a href="#tab-files" data-toggle="tab">Files</a></li>
@@ -141,5 +141,13 @@
 
 			</form>
 		</div>
+
+		<script>
+			window.app.ready(function(){
+				$('#options-tabs a').click(function(e) {
+					window.app.resize();
+				});
+			});
+		</script>
 	</body>
 </html>
