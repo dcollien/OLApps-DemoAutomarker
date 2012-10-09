@@ -34,6 +34,7 @@ post = ->
 		file: file
 		metadata: {
 			submitted: true
+			pending: true
 		}
 
 	# set submission data

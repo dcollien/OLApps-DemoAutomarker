@@ -7,6 +7,7 @@ compilation = compileSubmission data
 submission = {}
 submission.metadata =
 	compiled: true
+	pending: false
 
 if compilation is null or compilation.error
 	# there was a compile error

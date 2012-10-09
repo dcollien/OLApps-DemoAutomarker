@@ -12,6 +12,8 @@ setDefaults = (view) ->
 # POST and GET controllers
 post = ->
 	# grab data from POST
+
+	# saving as draft
 	view =
 		fileData: request.data.fileData
 
@@ -56,6 +58,8 @@ get = ->
 			view.compiled = submission.metadata.compiled
 			view.compileError = submission.metadata.compileError
 			view.isCorrect = submission.metadata.isCorrect
+			
+			view.pending = submission.metadata.pending
 		try
 			view.status = (OpenLearning.activity.getStatus request.user)
 		catch err
