@@ -91,6 +91,7 @@ get = ->
 			view.message = "Your program is awaiting compilation and testing."
 			view.alertClass = "alert-info"
 			view.pending = true
+			view.comments = false
 		else if view.status is 'completed'
 			view.messageHeader = "Completed"
 			view.message = "You have completed this task."
