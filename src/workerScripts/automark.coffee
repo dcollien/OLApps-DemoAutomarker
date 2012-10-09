@@ -14,6 +14,8 @@ if compilation is null or compilation.error
 	comments += if compilation then compilation.error else 'Compiler Error'
 	comments += '\n}}}\n'
 	markObject = { completed: false, comments: comments }
+	
+	submission.metadata.compileError = true
 else
 	activityData = compilation.activityData
 
