@@ -73,14 +73,20 @@ get = ->
 		if mark
 			view.comments = mark.comments
 
+		view.feedbackHeader = "Feedback:"
+		view.feedbackClass = "feedback"
+
 		if (view.compileError)
 			view.messageHeader = "Compile Error"
 			view.message = "There was a problem compiling your program."
 			view.alertClass = "alert-error alert-block"
+			view.feedbackHeader = "Compile Errors:"
+			view.feedbackClass = "redFeedback"
 		else if (view.isCorrect is false)
 			view.messageHeader = "Problem in Testing"
 			view.message = "There was a problem running your program."
 			view.alertClass = "alert-block"
+			view.feedbackHeader = "Testing Output:"
 		else if view.status is 'incomplete'
 			view.messageHeader = "Submit a Solution"
 			view.message = "Write your solution below:"

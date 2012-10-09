@@ -104,7 +104,7 @@ else
 		markObject = { completed: false, comments: incorrectComment }
 
 
-OpenLearning.activity.saveSubmission(data.user, submission, 'file');
+OpenLearning.activity.saveSubmission(data.user, submission, 'file')
 
 # bundle this mark into a marks update object
 marks = {}

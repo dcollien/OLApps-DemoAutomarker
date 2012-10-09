@@ -79,6 +79,14 @@
 			vertical-align: sub;
 		}
 
+		.feedback {
+			color: black;
+		}
+
+		.redFeedback {
+			color: #833;
+		}
+
 		</style>
 	</head>
 	<body>
@@ -107,7 +115,7 @@
 					<br>
 
 					{{#comments}}
-					<b>Feedback:</b><br>
+					<b class="{{feedbackClass}}">{{feedbackHeader}}</b><br>
 					<div class="markup">
 						{{&comments}}
 					</div>
