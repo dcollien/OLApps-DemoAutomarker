@@ -8,6 +8,23 @@ fields = ['stdin', 'stdout', 'args', 'returnValue', 'correctComment', 'incorrect
 booleanFields = ['isInline', 'isStdoutStripped']
 
 setDefaults = (view) ->
+	if not view.incorrectComment
+		view.incorrectComment = '''
+Your program produced:
+
+{{{
+<<stdout>>
+}}}
+
+----
+
+Expecting:
+
+{{{
+<<expectedStdout>>
+}}}
+'''
+
 	if not view.returnValue? or view.returnValue is ''
 		view.returnValue = '0'
 
