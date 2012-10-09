@@ -105,7 +105,10 @@
 									<span class="help-block">
 										Expected value of stdout after execution
 									</span>
-
+									<br/>
+									<label class="checkbox">
+										<input type="checkbox" name="ignoreStdout"{{#ignoreStdout}} checked="checked"{{/ignoreStdout}} value="yes"> Ignore stdout completely (allow anything)
+									</label>
 									<br/>
 									<label class="checkbox">
 										<input type="checkbox" name="isStdoutStripped"{{#isStdoutStripped}} checked="checked"{{/isStdoutStripped}} value="yes"> Ignore new-line characters.
@@ -118,6 +121,10 @@
 								<div class="controls">
 									<input type="text" class="input-small" name="returnValue" id="returnValue" value="{{returnValue}}" placeholder="Return Code">
 								</div>
+								<br/>
+									<label class="checkbox">
+										<input type="checkbox" name="ignoreExitCode"{{#ignoreExitCode}} checked="checked"{{/ignoreExitCode}} value="yes"> Ignore exit code (allow anything)
+									</label>
 							</div>
 						</fieldset>
 					</div>

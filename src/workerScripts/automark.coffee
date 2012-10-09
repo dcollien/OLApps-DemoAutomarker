@@ -64,7 +64,15 @@ else
 
 	programStderr = (output.stderr.replace '\r', '')
 
-	if (programStdout is expectedOut) and (output.exitCode is expectedReturnValue)
+	isCorrect = true
+
+	if not activityData.ignoreStdout
+		isCorrect = isCorrect and (programStdout is expectedOut)
+
+	if not activityData.ignoreExitCode
+		isCorrect = isCorrect and (output.exitCode is expectedReturnValue)
+	
+	if isCorrect
 		# matches, woohoo!
 		correctComment = activityData.correctComment
 		if !correctComment

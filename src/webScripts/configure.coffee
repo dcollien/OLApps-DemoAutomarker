@@ -5,7 +5,7 @@ template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
 fields = ['stdin', 'stdout', 'args', 'returnValue', 'correctComment', 'incorrectComment']
-booleanFields = ['isInline', 'isStdoutStripped']
+booleanFields = ['isInline', 'isStdoutStripped', 'ignoreStdout', 'ignoreExitCode']
 
 setDefaults = (view) ->
 	if not view.incorrectComment
@@ -23,8 +23,8 @@ Expecting:
 {{{
 <<expectedStdout>>
 }}}
-'''
-
+'''	
+	
 	if not view.returnValue? or view.returnValue is ''
 		view.returnValue = '0'
 
