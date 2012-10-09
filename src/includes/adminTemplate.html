@@ -144,7 +144,7 @@
 
 		<script>
 			window.app.ready(function(){
-				$('#options-tabs a').click(function(e) {
+				$('#options-tabs a[data-toggle="tab"]').on('shown', function (e) {
 					window.app.resize();
 				});
 			});
