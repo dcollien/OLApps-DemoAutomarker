@@ -116,7 +116,7 @@ get = ->
 
 
 checkPermission 'read', accessDeniedTemplate, ->
-	if request.method is 'POST'
+	if request.method is 'POST' and request.data.action == 'saveProgram'
 		render template, post()
 	else
 		render template, get()
