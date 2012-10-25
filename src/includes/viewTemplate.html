@@ -100,28 +100,31 @@
 			<div class="alert {{alertClass}}">
 				<h4>{{messageHeader}}</h4>
 				{{message}}
+
+				{{#pending}}
+				<br/>
+				<div>
+					<img src="{{loader_gif}}"/> Waiting for Marking...
+				</div>
+
+				<script>
+					var markingPoller = setInterval( function() {
+						$.getJSON('./status', 
+							function( result ) {
+								if (!result.pending) {
+									clearInterval(markingPoller);
+									window.location.reload();
+								}
+							}
+						);
+					}, 2000 );
+				</script>
+				<br/>
+				{{/pending}}
+
 			</div>
 		<br/> <br/>
 		{{/message}}
-
-		{{#pending}}
-		<div>
-			<img src="{{loader_gif}}"/> Waiting for Marking...
-		</div>
-
-		<script>
-			var markingPoller = setInterval( function() {
-				$.getJSON('./status', 
-					function( result ) {
-						if (!result.pending) {
-							clearInterval(markingPoller);
-							window.location.reload();
-						}
-					}
-				);
-			}, 2000 );
-		</script>
-		{{/pending}}
 
 		<div class="container" style="width: 740px">
 			<form method="post" id="submitForm" class="form-horizontal">
