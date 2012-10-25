@@ -61,7 +61,8 @@ else
 		programStdout = output.stdout.replace('\n' , '')
 		expectedOut = expectedOut.replace('\n', '')
 	else
-		programStdout = output.stdout
+		programStdout = output.stdout.trim '\n'
+		expectedOut = expectedOut.trim '\n'
 
 	programStderr = (output.stderr.replace '\r', '')
 
