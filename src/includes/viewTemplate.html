@@ -138,7 +138,7 @@
 					</div>
 
 					<div id="submitButtons" class="form-actions">
-						<a href="#" id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right">Save and Auto-Mark {{#completed}}Again{{/completed}}</a>
+						<button id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right" data-loading-text="Submitting..." data-complete-text="Submitted">Submit for Marking {{#completed}}Again{{/completed}}</button>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
 					</div>
 				</fieldset>
@@ -157,6 +157,7 @@
 			} );
 
 			$('#submitButton').click( function( ) {
+				$(this).button('loading');
 				$('#form-action').val("submit");
 				$.ajax({
 					type: 'POST',
@@ -169,10 +170,12 @@
 							resultContainer.text( result.error );
 							resultContainer.addClass( 'alert' );
 							resultContainer.addClass( 'alert-error' );
+							$(this).button('reset');
 						} else {
 							resultContainer.text( result.message );
 							resultContainer.addClass( 'well' );
     						window.app.sendMessage( 'updateProgress', {} );
+							$(this).button('complete');
 						}
 						resultContainer.fadeIn( function() {
 							window.app.resize();
