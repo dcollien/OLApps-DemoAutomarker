@@ -118,8 +118,6 @@
 					{{&csrf_token}}
 					<input type="hidden" id="form-action" name="action" value="saveProgram">
 					
-					<legend>My Solution:</legend>
-					<br>
 
 					{{#comments}}
 					<b class="{{feedbackClass}}">{{feedbackHeader}}</b><br>
@@ -129,6 +127,7 @@
 					<br>
 					{{/comments}}
 
+					<legend>My Solution:</legend>
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
 						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
@@ -139,7 +138,7 @@
 					</div>
 
 					<div id="submitButtons" class="form-actions">
-						<button id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right" data-loading-text="Submitting..." data-complete-text="Submitted">Submit for Marking {{#completed}}Again{{/completed}}</button>
+						<button id="submitButton" class="btn btn-success" style="float: right" data-loading-text="Marking..." {{#pending}}disabled="disabled"{{/pending}}>Submit for Marking {{#completed}}Again{{/completed}}</button>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
 					</div>
 				</fieldset>
@@ -176,7 +175,6 @@
 							resultContainer.text( result.message );
 							resultContainer.addClass( 'well' );
     						window.app.sendMessage( 'updateProgress', {} );
-							$(this).button('complete');
 						}
 						resultContainer.fadeIn( function() {
 							window.app.resize();
