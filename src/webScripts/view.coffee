@@ -47,7 +47,7 @@ get = ->
 	# get activity page data
 	try
 		submissionPage = (OpenLearning.activity.getSubmission request.user)
-		view.submissionPage = submissionPage
+		view.submissionPage = JSON.stringify submissionPage
 	catch err
 		view.error = 'Something went wrong: Unable to load submission. '
 
