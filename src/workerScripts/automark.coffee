@@ -73,6 +73,7 @@ else
 	if not activityData.ignoreExitCode
 		isCorrect = isCorrect and (output.exitCode is expectedReturnValue)
 	
+	markup = ''
 	if isCorrect
 		# matches, woohoo!
 		correctComment = activityData.correctComment
@@ -82,12 +83,14 @@ else
 		correctComment = correctComment.replace /<<\s*stdin\s*>>/g, programStdin
 		correctComment = correctComment.replace /<<\s*stdout\s*>>/g, programStdout
 		correctComment = correctComment.replace /<<\s*stderr\s*>>/g, programStderr
-		
+
 		correctComment = correctComment.replace /<<\s*exitCode\s*>>/g, output.exitCode
 
 		markObject = { completed: true, comments: correctComment }
 
 		submission.metadata.isCorrect = true
+
+		markup = '{{{\n#!code\n' + programStdout + '\n}}}'
 	else
 		incorrectComment = activityData.incorrectComment
 
@@ -119,6 +122,7 @@ else
 
 		submission.metadata.isCorrect = false
 
+submission.markup = markup
 
 OpenLearning.activity.saveSubmission(data.user, submission, 'file')
 
