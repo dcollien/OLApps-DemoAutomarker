@@ -91,7 +91,7 @@ get = ->
 		else if (view.isCorrect is false)
 			view.messageHeader = "Did Not Pass Tests"
 			view.message = "Your program didn't pass the tests. Check the feedback below."
-			view.alertClass = "alert-block"
+			view.alertClass = "alert-error alert-block"
 			view.feedbackHeader = "Testing Output:"
 		else if view.status is 'incomplete' or view.isDraft
 			view.messageHeader = "Submit a Solution"
