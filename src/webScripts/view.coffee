@@ -100,8 +100,8 @@ get = ->
 			view.feedbackHeader = "Feedback from your last submission:"
 			view.incomplete = true
 		else if view.pending or (view.status is 'pending')
-			view.messageHeader = "Awaiting Testing"
-			view.message = "Your program is awaiting compilation and testing."
+			view.messageHeader = "Submitted and Awaiting Testing"
+			view.message = "Your program has been submitted and is awaiting compilation and testing."
 			view.alertClass = "alert-info"
 			view.pending = true
 			view.comments = false
