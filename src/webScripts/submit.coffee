@@ -1,8 +1,4 @@
 include "mustache.js"
-include "guards.js"
-
-template = include "submitTemplate.html"
-accessDeniedTemplate = include "accessDeniedTemplate.html"
 
 setDefaults = (view) ->
 	view.codemirror_js = mediaURL 'codemirror.js'
@@ -67,9 +63,23 @@ get = ->
 	return view
 
 
-checkPermission 'read', accessDeniedTemplate, ->
-	if request.method is 'POST'
-		render template, post()
+
+response.setHeader 'Content-Type', 'application/json'
+
+if (not request.sessionData?) or (not request.sessionData.permissions?)
+	view = {
+		error: "No Session Data"
+	}
+else if "read" in request.sessionData.permissions
+	if (request.method is 'POST') and (request.data.action is 'submit')
+		view = post()
 	else
-		render template, get()
+		view = get()
+else
+	view = {
+		error: "Permission Denied"
+	}
+
+response.writeJSON view
+
 

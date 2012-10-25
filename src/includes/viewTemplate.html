@@ -115,7 +115,7 @@
 			<form method="post" id="submitForm" class="form-horizontal">
 				<fieldset>
 					{{&csrf_token}}
-					<input type="hidden" name="action" value="saveProgram">
+					<input type="hidden" id="form-action" name="action" value="saveProgram">
 					
 					<legend>My Solution:</legend>
 					<br>
@@ -136,6 +136,9 @@
 					<div id="submitButtons" class="form-actions">
 						<a href="#" id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right">Save and Auto-Mark {{#completed}}Again{{/completed}}</a>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
+						<br/>
+						<div class="hide" id="submission-result">
+						</div>
 					</div>
 				</fieldset>
 			</form>
@@ -153,6 +156,28 @@
 			} );
 
 			$('#submitButton').click( function( ) {
+				$('#form-action').val("submit");
+				$.ajax({
+					type: 'POST',
+					url: './submit',
+					dataType: 'json',
+					data: $('#submitForm').serialize(),
+					success: function( result ) {
+						var resultContainer = $('#submission-result');
+						if (result.error) {
+							resultContainer.text( result.error );
+							resultContainer.addClass( 'alert' );
+							resultContainer.addClass( 'alert-error' );
+						} else {
+							resultContainer.text( result.message );
+							resultContainer.addClass( 'well' );
+    						window.app.sendMessage( 'updateProgress', {} );
+						}
+						resultContainer.fadeIn();
+						$('#form-action').val("saveProgram");
+					}
+				});
+
 				$('#submitForm').attr('action', './submit').submit();
 				return false;
 			} );

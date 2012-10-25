@@ -43,7 +43,7 @@ else
 
 	try
 		output = ((compiledCode, environment) ->
-			eval( compiledCode );
+			eval( compiledCode )
 			return Program(environment).run()
 		).call context, compilation.compiledCode, environment
 	catch err
@@ -84,8 +84,6 @@ else
 	else
 		incorrectComment = activityData.incorrectComment
 
-		submission.metadata.isCorrect = false
-
 		if !incorrectComment
 			incorrectComment = "Incorrect."
 
@@ -111,6 +109,8 @@ else
 
 		# better luck next time
 		markObject = { completed: false, comments: incorrectComment }
+
+		submission.metadata.isCorrect = false
 
 
 OpenLearning.activity.saveSubmission(data.user, submission, 'file')
