@@ -29,8 +29,10 @@ post = ->
 	submission =
 		file: file
 		metadata: {
+			compiled: false
 			submitted: true
 			pending: true
+			draft: false
 		}
 
 	# set submission data

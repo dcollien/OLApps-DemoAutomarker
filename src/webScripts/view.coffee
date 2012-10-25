@@ -25,6 +25,7 @@ post = ->
 		file: file
 		metadata: {
 			compiled: false
+			draft: true
 		}
 
 	# set submission data
@@ -58,7 +59,7 @@ get = ->
 			view.compiled = submission.metadata.compiled
 			view.compileError = submission.metadata.compileError
 			view.isCorrect = submission.metadata.isCorrect
-
+			view.isDraft = submission.metadata.draft
 			view.pending = submission.metadata.pending
 		try
 			view.status = (OpenLearning.activity.getStatus request.user)
@@ -91,7 +92,7 @@ get = ->
 			view.message = "There was a problem running your program."
 			view.alertClass = "alert-block"
 			view.feedbackHeader = "Testing Output:"
-		else if view.status is 'incomplete'
+		else if view.status is 'incomplete' or view.isDraft
 			view.messageHeader = "Submit a Solution"
 			view.message = "Write your solution below:"
 			view.alertClass = "alert-info"
