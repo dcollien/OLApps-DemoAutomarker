@@ -112,8 +112,10 @@
 				$.getJSON({
 					url: './status',
 					success: function( result ) {
-						clearInterval(markingPoller);
-						window.reload();
+						if (!result.pending) {
+							clearInterval(markingPoller);
+							window.reload();
+						}
 					}
 				});
 			}, 2000 );
