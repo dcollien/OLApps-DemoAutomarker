@@ -11,7 +11,7 @@ diff_match_patch.prototype.diff_prettyCreole = function(diffs) {
         creole[x] = '**' + text.replace('\\\\', '<<newline>>\\\\') + '**';
         break;
       case DIFF_DELETE:
-        creole[x] = '[-' + text.replace('\\\\', '<<newline>>\\\\') + '-]';
+        creole[x] = '--' + text.replace('\\\\', '<<newline>>\\\\') + '--';
         break;
       case DIFF_EQUAL:
         creole[x] = text;
