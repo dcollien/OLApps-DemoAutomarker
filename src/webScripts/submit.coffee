@@ -1,5 +1,3 @@
-include "mustache.js"
-
 setDefaults = (view) ->
 	view.codemirror_js = mediaURL 'codemirror.js'
 	view.codemirror_mode_js = mediaURL 'clike.js'

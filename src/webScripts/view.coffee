@@ -96,6 +96,7 @@ get = ->
 			view.messageHeader = "Submit a Solution"
 			view.message = "Write your solution below:"
 			view.alertClass = "alert-info"
+			view.feedbackHeader = "Feedback from your last submission:"
 			view.incomplete = true
 		else if view.pending or (view.status is 'pending')
 			view.messageHeader = "Awaiting Testing"
