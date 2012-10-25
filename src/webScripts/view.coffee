@@ -84,13 +84,13 @@ get = ->
 
 		if (view.compileError)
 			view.messageHeader = "Compile Error"
-			view.message = "There was a problem compiling your program."
+			view.message = "Unable to compile your program. Check the compile errors below."
 			view.alertClass = "alert-error alert-block"
 			view.feedbackHeader = "Compile Errors:"
 			view.feedbackClass = "redFeedback"
 		else if (view.isCorrect is false)
-			view.messageHeader = "Problem in Testing"
-			view.message = "There was a problem running your program."
+			view.messageHeader = "Did Not Pass Tests"
+			view.message = "Your program didn't pass the tests. Check the feedback below."
 			view.alertClass = "alert-block"
 			view.feedbackHeader = "Testing Output:"
 		else if view.status is 'incomplete' or view.isDraft
