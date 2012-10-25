@@ -158,6 +158,7 @@
 
 			$('#submitButton').click( function( ) {
 				$(this).button('loading');
+				editor.save();
 				$('#form-action').val("submit");
 				$.ajax({
 					type: 'POST',
