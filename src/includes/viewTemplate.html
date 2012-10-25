@@ -165,6 +165,7 @@
 					dataType: 'json',
 					data: $('#submitForm').serialize(),
 					success: function( result ) {
+						console.log( result );
 						var resultContainer = $('#submission-result');
 						if (result.error) {
 							resultContainer.text( result.error );
