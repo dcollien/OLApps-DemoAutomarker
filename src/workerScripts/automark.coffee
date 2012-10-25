@@ -79,11 +79,11 @@ else
 		if !correctComment
 			correctComment = "Correct!"
 
-		comments = comments.replace /<<\s*stdin\s*>>/g, programStdin
-		comments = comments.replace /<<\s*stdout\s*>>/g, programStdout
-		comments = comments.replace /<<\s*stderr\s*>>/g, programStderr
+		correctComment = correctComment.replace /<<\s*stdin\s*>>/g, programStdin
+		correctComment = correctComment.replace /<<\s*stdout\s*>>/g, programStdout
+		correctComment = correctComment.replace /<<\s*stderr\s*>>/g, programStderr
 		
-		comments = comments.replace /<<\s*exitCode\s*>>/g, output.exitCode
+		correctComment = correctComment.replace /<<\s*exitCode\s*>>/g, output.exitCode
 
 		markObject = { completed: true, comments: correctComment }
 
