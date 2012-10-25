@@ -145,16 +145,15 @@
 					<legend>My Solution:</legend>
 					<div class="control-group">
 						<textarea name="fileData" id="fileData" style="width: 640px; height: 200px;">{{fileData}}</textarea>
-						{{#url}}<span class="help-block pull-right" style="font-size: 10px"><a href="{{url}}" target="_blank"><i class="icon-link"></i> Download/Link to this submission:</a> {{url}}</span>{{/url}}
 					</div>
-
-
-					<div class="hide" id="submission-result">
-					</div>
-
 					<div id="submitButtons" class="form-actions">
 						<button id="submitButton" class="btn btn-success" style="float: right" data-loading-text="Saving..." {{#pending}}disabled="disabled"{{/pending}}>Submit for Marking {{#completed}}Again{{/completed}}</button>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
+					</div>
+
+					{{#url}}<span class="help-block pull-right" style="font-size: 10px"><a href="{{url}}" target="_blank"><i class="icon-link"></i> Download/Link to this submission:</a> {{url}}</span>{{/url}}
+					<br/>
+					<div class="hide" id="submission-result">
 					</div>
 				</fieldset>
 			</form>
