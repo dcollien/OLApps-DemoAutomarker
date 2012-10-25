@@ -14,6 +14,7 @@ if compilation is null or compilation.error
 	comments = '\n{{{\n'
 	comments += if compilation then compilation.error else 'Compiler Error'
 	comments += '\n}}}\n'
+
 	markObject = { completed: false, comments: comments }
 	
 	submission.metadata.compileError = true
@@ -77,6 +78,12 @@ else
 		correctComment = activityData.correctComment
 		if !correctComment
 			correctComment = "Correct!"
+
+		comments = comments.replace /<<\s*stdin\s*>>/g, programStdin
+		comments = comments.replace /<<\s*stdout\s*>>/g, programStdout
+		comments = comments.replace /<<\s*stderr\s*>>/g, programStderr
+		
+		comments = comments.replace /<<\s*exitCode\s*>>/g, output.exitCode
 
 		markObject = { completed: true, comments: correctComment }
 
