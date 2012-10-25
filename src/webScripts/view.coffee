@@ -8,6 +8,7 @@ setDefaults = (view) ->
 	view.codemirror_js = mediaURL 'codemirror.js'
 	view.codemirror_mode_js = mediaURL 'clike.js'
 	view.codemirror_css = mediaURL 'codemirror.css'
+	view.loader_gif = mediaURL 'loader.gif'
 
 # POST and GET controllers
 post = ->
