@@ -90,7 +90,7 @@ else
 
 		submission.metadata.isCorrect = true
 
-		markup = '{{{\n#!code\n' + programStdout + '\n}}}'
+		markup = '{{{\n' + programStdout + '\n}}}'
 	else
 		incorrectComment = activityData.incorrectComment
 
