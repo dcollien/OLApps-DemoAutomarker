@@ -61,9 +61,9 @@ else
 		programStdout = output.stdout.replace('\n' , '')
 		expectedOut = expectedOut.replace('\n', '')
 	else
-		programStdout = output.stdout.trim '\n'
-		expectedOut = expectedOut.trim '\n'
-
+		programStdout = output.stdout.trim()
+		expectedOut = expectedOut.trim()
+	
 	programStderr = (output.stderr.replace '\r', '')
 
 	isCorrect = true
