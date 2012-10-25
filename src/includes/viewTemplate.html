@@ -133,12 +133,13 @@
 						{{#url}}<span class="help-block pull-right" style="font-size: 10px">Permalink: <a href="{{url}}" target="_blank">{{url}}</a></span>{{/url}}
 					</div>
 
+
+					<div class="hide" id="submission-result">
+					</div>
+
 					<div id="submitButtons" class="form-actions">
 						<a href="#" id="submitButton" class="btn btn-success{{#pending}} hide{{/pending}}" style="float: right">Save and Auto-Mark {{#completed}}Again{{/completed}}</a>
 						<button type="submit" class="btn btn-primary">Save Draft</button>
-						<br/>
-						<div class="hide" id="submission-result">
-						</div>
 					</div>
 				</fieldset>
 			</form>
@@ -173,7 +174,9 @@
 							resultContainer.addClass( 'well' );
     						window.app.sendMessage( 'updateProgress', {} );
 						}
-						resultContainer.fadeIn();
+						resultContainer.fadeIn( function() {
+							window.app.resize();
+						} );
 						$('#form-action').val("saveProgram");
 					}
 				});
