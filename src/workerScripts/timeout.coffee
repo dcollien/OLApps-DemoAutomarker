@@ -1,4 +1,4 @@
-if data.parentTarget is 'automark'
+if data.parentScriptTarget is 'automark'
 	submission = {}
 	submission.metadata =
 		compiled: true
