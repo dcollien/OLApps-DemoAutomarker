@@ -52,7 +52,7 @@ else
 			stdout: ''
 			stderr : ('' + err)
 			files: {}
-	
+
 	expectedOut = activityData.stdout
 	programStdout = output.stdout
 	programStderr = output.stderr
@@ -72,11 +72,24 @@ else
 
 	if programStdout
 		programStdout = (programStdout.replace '\r', '')
+
 		if activityData.isStdoutStripped
 			programStdout = programStdout.replace('\n' , '')
 			expectedOut = expectedOut.replace('\n', '')
 		else
+			# trim every line of both expected stdout and program stdout
+			programStdoutLines = programStdout.split '\n'
+			programStdout = ''
+			for line in programStdoutLines
+				programStdout += line.trim() + '\n'
+
 			programStdout = programStdout.trim()
+
+			expectedOutLines = expectedOut.split '\n'
+			expectedOut = ''
+			for line in expectedOutLines
+				expectedOut += line.trim() + '\n'
+
 			expectedOut = expectedOut.trim()
 	else
 		programStdout = ''
