@@ -8,6 +8,10 @@ submission = {}
 submission.metadata =
 	compiled: true
 	pending: false
+	draft: false
+	compileError: false
+	isCorrect: false
+
 
 if compilation is null or compilation.error
 	# there was a compile error
@@ -102,7 +106,8 @@ else
 	if not activityData.ignoreExitCode
 		isCorrect = isCorrect and (output.exitCode is expectedReturnValue)
 	
-	markup = ''
+
+	submission.markup = '{{{\n' + programStdout + '\n}}}'
 	if isCorrect
 		# matches, woohoo!
 		correctComment = activityData.correctComment
@@ -118,8 +123,6 @@ else
 		markObject = { completed: true, comments: correctComment }
 
 		submission.metadata.isCorrect = true
-
-		markup = '{{{\n' + programStdout + '\n}}}'
 	else
 		incorrectComment = activityData.incorrectComment
 
@@ -150,8 +153,6 @@ else
 		markObject = { completed: false, comments: incorrectComment }
 
 		submission.metadata.isCorrect = false
-
-submission.markup = markup
 
 OpenLearning.activity.saveSubmission(data.user, submission, 'file')
 
