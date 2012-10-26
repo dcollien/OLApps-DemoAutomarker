@@ -105,10 +105,12 @@ get = ->
 			view.alertClass = "alert-info"
 			view.pending = true
 			view.comments = false
-		else if view.status is 'completed'
+		else if view.status is 'completed' or view.isCorrect
 			view.messageHeader = "Correct"
 			view.message = "You have completed this task."
 			view.alertClass = "alert-success"
+		else
+			view.messageHeader = "..."
 		
 		if view.status is 'completed'	
 			view.completed = true
