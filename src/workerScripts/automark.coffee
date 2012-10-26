@@ -50,9 +50,9 @@ else
 	catch err
 		output =
 			stdout: ''
-			stderr : err
+			stderr : ('' + err)
 			files: {}
-
+	
 	expectedOut = activityData.stdout
 	programStdout = output.stdout
 	programStderr = output.stderr
