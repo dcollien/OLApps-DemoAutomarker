@@ -71,6 +71,7 @@ else
 		programStderr = ''
 
 	if programStdout
+		programStdout = (programStdout.replace '\r', '')
 		if activityData.isStdoutStripped
 			programStdout = programStdout.replace('\n' , '')
 			expectedOut = expectedOut.replace('\n', '')
@@ -79,7 +80,7 @@ else
 			expectedOut = expectedOut.trim()
 	else
 		programStdout = ''
-	
+
 	isCorrect = true
 
 	if not activityData.ignoreStdout
