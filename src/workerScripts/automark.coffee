@@ -53,21 +53,24 @@ else
 			stderr : err
 			files: {}
 
+	expectedOut = activityData.stdout or ""
+	programStdout = output.stdout or ""
+	programStderr = output.stderr or ""
+
 	# remove \r characters from provided stdout
-	expectedOut = (activityData.stdout.replace '\r', '')
+	expectedOut = (expectedOut.replace '\r', '')
+	programStderr = (programStderr.replace '\r', '')
 	expectedReturnValue = parseInt activityData.returnValue
 
 	if activityData.isStdoutStripped
-		programStdout = output.stdout.replace('\n' , '')
+		programStdout = programStdout.replace('\n' , '')
 		expectedOut = expectedOut.replace('\n', '')
 	else
-		programStdout = output.stdout.trim()
+		programStdout = programStdout.trim()
 		expectedOut = expectedOut.trim()
 	
-	programStderr = (output.stderr.replace '\r', '')
-
 	isCorrect = true
-
+	
 	if not activityData.ignoreStdout
 		isCorrect = isCorrect and (programStdout is expectedOut)
 
