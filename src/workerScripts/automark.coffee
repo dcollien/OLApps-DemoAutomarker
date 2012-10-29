@@ -74,9 +74,11 @@ else
 	else
 		programStderr = ''
 
+
+	originalStdout = programStdout
 	if programStdout
 		programStdout = (programStdout.replace '\r', '')
-
+		
 		if activityData.isStdoutStripped
 			programStdout = programStdout.replace('\n' , '')
 			expectedOut = expectedOut.replace('\n', '')
@@ -107,7 +109,7 @@ else
 		isCorrect = isCorrect and (output.exitCode is expectedReturnValue)
 	
 
-	submission.markup = '{{{\n' + programStdout + '\n}}}'
+	submission.markup = '{{{\n' + originalStdout + '\n}}}'
 	if isCorrect
 		# matches, woohoo!
 		correctComment = activityData.correctComment
@@ -115,7 +117,7 @@ else
 			correctComment = "Correct!"
 
 		correctComment = correctComment.replace /<<\s*stdin\s*>>/g, programStdin
-		correctComment = correctComment.replace /<<\s*stdout\s*>>/g, programStdout
+		correctComment = correctComment.replace /<<\s*stdout\s*>>/g, originalStdout
 		correctComment = correctComment.replace /<<\s*stderr\s*>>/g, programStderr
 
 		correctComment = correctComment.replace /<<\s*exitCode\s*>>/g, output.exitCode
@@ -130,7 +132,7 @@ else
 			incorrectComment = "Incorrect."
 
 		incorrectComment = incorrectComment.replace /<<\s*stdin\s*>>/g, programStdin
-		incorrectComment = incorrectComment.replace /<<\s*stdout\s*>>/g, programStdout
+		incorrectComment = incorrectComment.replace /<<\s*stdout\s*>>/g, originalStdout
 		incorrectComment = incorrectComment.replace /<<\s*stderr\s*>>/g, programStderr
 
 
