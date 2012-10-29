@@ -78,12 +78,9 @@ get = ->
 		# build view from page data
 		for field in fields
 			view[field] = data[field]
-
-	if data.isInline
-		view.isInline = true
-
-	if data.isStdoutStripped
-		view.isStdoutStripped = true
+		
+		for field in booleanFields
+			view[field] = data[field]
 
 	return view
 
