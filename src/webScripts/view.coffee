@@ -90,7 +90,7 @@ get = ->
 			view.feedbackClass = "redFeedback"
 		else if (view.isCorrect is false)
 			view.messageHeader = "Did Not Pass Tests"
-			view.message = "Your program didn't pass the tests. Check the feedback below."
+			view.message = "Your latest submission didn't pass the tests. Check the feedback below."
 			view.alertClass = "alert-error alert-block"
 			view.feedbackHeader = "Testing Output:"
 		else if view.status is 'incomplete' or view.isDraft
@@ -106,7 +106,7 @@ get = ->
 			view.pending = true
 			view.comments = false
 		else if (view.status is 'completed') or view.isCorrect
-			view.messageHeader = "Correct"
+			view.messageHeader = "Completed"
 			view.message = "You have completed this task."
 			view.alertClass = "alert-success"
 		
