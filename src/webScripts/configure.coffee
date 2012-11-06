@@ -4,8 +4,8 @@ include "guards.js"
 template = include "adminTemplate.html"
 accessDeniedTemplate = include "accessDeniedTemplate.html"
 
-fields = ['stdin', 'stdout', 'args', 'returnValue', 'correctComment', 'incorrectComment']
-booleanFields = ['isInline', 'isStdoutStripped', 'ignoreStdout', 'ignoreExitCode']
+fields = ['stdin', 'stdout', 'args', 'returnValue', 'correctComment', 'incorrectComment', 'replaceFrom', 'replaceTo']
+booleanFields = ['isInline', 'isStdoutStripped', 'ignoreStdout', 'ignoreExitCode', 'usesReplace']
 
 setDefaults = (view) ->
 	if not view.incorrectComment

@@ -126,6 +126,22 @@
 									</label>
 								</div>
 							</div>
+
+							<div class="control-group">
+								<label class="control-label" for="replace">Pre-processing</label>
+								<div class="controls">
+									<label class="checkbox">
+										<input type="checkbox" name="usesReplace"{{#usesReplace}} checked="checked"{{/usesReplace}} value="yes"> Pre-process the code?
+									</label>
+
+									Replace:<br/>
+									<input type="text" class="input-small" name="replaceFrom" id="returnValue" value="{{replaceFrom}}" placeholder="Regex Match">
+									<br/>
+									With:<br/>
+									<input type="text" class="input-small" name="replaceTo" id="returnValue" value="{{replaceTo}}" placeholder="Replacement">
+									
+								</div>
+							</div>
 						</fieldset>
 					</div>
 
