@@ -1,9 +1,19 @@
 include("cCompiler.js");
 
-var compileSubmission;
+var compileSubmission, doReplace;
+
+
+doReplace = function(data, replaceFrom, replaceTo) {
+  if (replaceFrom) {
+    data = data.replace(new RegExp(replaceFrom), replaceTo);
+  }
+
+  return data;
+};
 
 compileSubmission = function(data, shouldSave) {
-  var activityData, compiledCode, error, file, files, submission, submissionData, i, fileList;
+  var activityData, compiledCode, error, file, files, submission, submissionData;
+  var i, fileList, replaceFrom, replaceTo;
 
   try {
     activityData = OpenLearning.page.getData().data;
@@ -11,6 +21,11 @@ compileSubmission = function(data, shouldSave) {
   } catch (err) {
     log(err);
     return null;
+  }
+
+  if (activityData.usesReplace) {
+    replaceFrom = activityData.replaceFrom;
+    replaceTo = activityData.replaceTo;
   }
 
   try {
@@ -28,12 +43,12 @@ compileSubmission = function(data, shouldSave) {
     fileList = submissionData.submission.files;
     for (i = 0; i < fileList.length; i++) {
       file = fileList[i];
-      files[file.filename] = file.data;
+      files[file.filename] = doReplace(file.data, replaceFrom, replaceTo);
     }
   } else if (submissionData.submission.file) {
     submission.file = submissionData.submission.file;
     file = submissionData.submission.file;
-    files[file.filename] = file.data;
+    files[file.filename] = doReplace(file.data, replaceFrom, replaceTo);
   } else {
     error = 'No files in submission';
     files = null;

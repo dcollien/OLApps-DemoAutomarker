@@ -2,7 +2,7 @@ include "compile.js"
 include "diff_match_patch.js"
 include "diff_creole.js"
 
-compilation = compileSubmission data
+compilation = compileSubmission data, false
 
 submission = {}
 submission.metadata =

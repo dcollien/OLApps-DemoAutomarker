@@ -261,7 +261,8 @@
 								window.app.resize();
 							} );
 						} else {
-							window.location.reload();
+							window.location.reload(true);
+							window.location = window.location.href;
 						}
 
 						$('#form-action').val("saveProgram");
