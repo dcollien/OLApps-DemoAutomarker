@@ -33,9 +33,6 @@ post = ->
 	# grab data from POST
 	view = {}
 
-	# this app always has something embedded in the activity page
-	view.isEmbedded = true
-
 	# this app is automarked
 	view.isAutomarked = true
 
@@ -53,6 +50,10 @@ post = ->
 		OpenLearning.activity.setSubmissionType 'file'
 	else
 		OpenLearning.activity.setSubmissionType 'multi-file'
+
+
+	# this app is embedded if the inline was checked
+	view.isEmbedded = view.isInline
 
 	# set activity page data
 	try
